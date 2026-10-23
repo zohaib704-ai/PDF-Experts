@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotate PDF — Rotate Pages 90°, 180°, 270° | PDF Experts</title>
+  <meta name="description" content="Rotate all pages or selected pages of a PDF by 90, 180 or 270 degrees. Runs privately in your browser.">
+  <link rel="canonical" href="https://pdfexperts.github.io/tool-rotate.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="Rotate PDF — Page Rotation in the Browser">
+  <meta property="og:description" content="Fix sideways scans and rotate PDF pages without uploading a thing.">
+  <meta property="og:url" content="https://pdfexperts.github.io/tool-rotate.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="tool" data-tool="rotate-pdf" data-root=".">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="tool-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="index.html#tools">Tools</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">Rotate PDF</span>
+        </nav>
+        <h1>Rotate PDF</h1>
+        <p class="lede">Fix scanned pages that are sideways or upside down. Rotate every page or just the ones you select.</p>
+      </div>
+    </section>
+
+    <section class="tool-layout-section">
+      <div class="container tool-layout">
+        <div class="tool-workspace">
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+            Your PDF stays in your browser. Nothing is uploaded.
+          </div>
+
+          <label class="dropzone" id="dropzone" aria-label="Add a PDF file">
+            <input type="file" id="file-input" accept=".pdf,application/pdf">
+            <div class="dropzone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 4v5h-5"/></svg>
+            </div>
+            <h2>Drop a PDF here</h2>
+            <p>or click to browse</p>
+          </label>
+
+          <div class="file-list-wrap">
+            <div class="file-list-head">
+              <span id="file-count">0 files</span>
+              <button type="button" class="btn btn-ghost btn-small" id="clear-all" hidden>Clear</button>
+            </div>
+            <ul class="file-list" id="file-list"></ul>
+          </div>
+
+          <div class="option-panel">
+            <h2>Rotation options</h2>
+            <div class="option-grid">
+              <div class="field">
+                <label for="rotate-angle">Rotation</label>
+                <select id="rotate-angle">
+                  <option value="90">90° clockwise</option>
+                  <option value="180">180° (flip)</option>
+                  <option value="270">270° clockwise</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="option-grid" style="margin-top: 14px;" role="radiogroup" aria-label="Apply to">
+              <label class="field">
+                <span class="field-label"><input type="radio" name="rotate-apply" value="all" checked> All pages</span>
+              </label>
+              <label class="field">
+                <span class="field-label"><input type="radio" name="rotate-apply" value="some"> Selected pages</span>
+              </label>
+            </div>
+
+            <div class="field" id="rotate-pages-field" hidden style="margin-top: 14px;">
+              <label for="rotate-pages">Pages to rotate</label>
+              <input type="text" id="rotate-pages" placeholder="e.g. 1, 3, 5-8">
+              <small>Use commas for individual pages and a dash for a range.</small>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" id="process-btn" disabled>Rotate PDF</button>
+            <button class="btn btn-ghost" id="reset-btn" type="button">Reset</button>
+          </div>
+
+          <div class="error-box" id="error-box" role="alert" hidden></div>
+
+          <div class="progress-wrap" id="progress-wrap" hidden>
+            <div class="progress-head">
+              <span id="progress-text">Processing…</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+          </div>
+
+          <div class="result-box" id="result-box" hidden>
+            <h2>Your rotated PDF is ready</h2>
+            <p id="result-meta"></p>
+            <a class="btn btn-primary download-btn" id="download-btn" download>Download rotated PDF</a>
+            <div class="ad-slot ad-inline" aria-label="Advertisement"><span>Advertisement</span></div>
+          </div>
+        </div>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Related tools</h2>
+            <ul class="related-list" id="related-tools"></ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tool-seo">
+      <div class="container">
+        <div class="seo-copy">
+          <h2>Rotate PDF pages without losing quality</h2>
+          <p>The Rotate PDF tool changes the rotation attribute stored inside each PDF page. That means the document is not re-rendered or re-compressed, so there is no quality loss: text stays text, images stay sharp, and fonts stay embedded. Rotating pages is non-destructive in every viewer that respects the rotation flag.</p>
+          <p>Use "All pages" for a scan that was saved sideways. Use "Selected pages" when only some pages came out of the scanner the wrong way — for example, a mixed document where the signature page is upside down but the rest is fine. Page numbers start at 1 in the file order you see in your PDF reader.</p>
+          <h2>What to know</h2>
+          <ul>
+            <li>Rotations are cumulative. Rotating 90° twice gives 180°.</li>
+            <li>If the source file uses landscape pages with pre-rotated content, use 90° or 270° rather than 180°.</li>
+            <li>To reorder pages afterwards, use <a href="tool-organize.html">Organize PDF</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="assets/js/tools-data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script>
+    window.PDF_EXPERTS_TOOL = {
+      type: "rotate",
+      accept: ".pdf,application/pdf",
+      multiple: false,
+      maxFiles: 1,
+      maxSizeMB: 100
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var radios = document.querySelectorAll("input[name='rotate-apply']");
+      var field = document.getElementById("rotate-pages-field");
+      function update() {
+        var val = (document.querySelector("input[name='rotate-apply']:checked") || {}).value;
+        field.hidden = val !== "some";
+      }
+      radios.forEach(function (el) { el.addEventListener("change", update); });
+      update();
+    });
+  </script>
+  <script src="assets/js/tool-runner.js"></script>
+</body>
+</html>
