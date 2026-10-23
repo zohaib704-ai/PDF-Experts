@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF to JPG — Export PDF Pages as Images | PDF Experts</title>
+  <meta name="description" content="Convert PDF pages to JPG or PNG images. Choose quality and resolution. Private browser processing with no uploads.">
+  <link rel="canonical" href="https://pdfexperts.github.io/tool-pdf-to-jpg.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="PDF to JPG — Convert Pages to Images">
+  <meta property="og:description" content="Turn PDF pages into high-quality JPG or PNG images. Runs locally.">
+  <meta property="og:url" content="https://pdfexperts.github.io/tool-pdf-to-jpg.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="tool" data-tool="pdf-to-jpg" data-root=".">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="tool-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="index.html#tools">Tools</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">PDF to JPG</span>
+        </nav>
+        <h1>PDF to JPG</h1>
+        <p class="lede">Render every PDF page as a crisp JPG or PNG image, ready to share or embed.</p>
+      </div>
+    </section>
+
+    <section class="tool-layout-section">
+      <div class="container tool-layout">
+        <div class="tool-workspace">
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+            Rendering happens in your browser. Nothing is uploaded.
+          </div>
+
+          <label class="dropzone" id="dropzone" aria-label="Add a PDF file">
+            <input type="file" id="file-input" accept=".pdf,application/pdf">
+            <div class="dropzone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="m21 17-5-5-9 9"/></svg>
+            </div>
+            <h2>Drop a PDF here</h2>
+            <p>or click to browse</p>
+          </label>
+
+          <div class="file-list-wrap">
+            <div class="file-list-head">
+              <span id="file-count">0 files</span>
+              <button type="button" class="btn btn-ghost btn-small" id="clear-all" hidden>Clear</button>
+            </div>
+            <ul class="file-list" id="file-list"></ul>
+          </div>
+
+          <div class="option-panel">
+            <h2>Image options</h2>
+            <div class="option-grid">
+              <div class="field">
+                <label for="jpg-format">Image format</label>
+                <select id="jpg-format">
+                  <option value="jpg" selected>JPG</option>
+                  <option value="png">PNG</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="jpg-quality">JPG quality</label>
+                <input type="number" id="jpg-quality" min="0.3" max="1" step="0.05" value="0.85">
+                <small>Lower = smaller files. Ignored for PNG.</small>
+              </div>
+              <div class="field">
+                <label for="jpg-scale">Resolution</label>
+                <select id="jpg-scale">
+                  <option value="1">1× (screen)</option>
+                  <option value="2" selected>2× (recommended)</option>
+                  <option value="3">3× (high DPI)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" id="process-btn" disabled>Convert to images</button>
+            <button class="btn btn-ghost" id="reset-btn" type="button">Reset</button>
+          </div>
+
+          <div class="error-box" id="error-box" role="alert" hidden></div>
+
+          <div class="progress-wrap" id="progress-wrap" hidden>
+            <div class="progress-head">
+              <span id="progress-text">Processing…</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+          </div>
+
+          <div class="result-box" id="result-box" hidden>
+            <h2>Your images are ready</h2>
+            <p id="result-meta"></p>
+            <a class="btn btn-primary download-btn" id="download-btn" download>Download images (.zip)</a>
+            <div class="ad-slot ad-inline" aria-label="Advertisement"><span>Advertisement</span></div>
+          </div>
+        </div>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Related tools</h2>
+            <ul class="related-list" id="related-tools"></ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tool-seo">
+      <div class="container">
+        <div class="seo-copy">
+          <h2>PDF to JPG, made simple</h2>
+          <p>PDF pages are a mix of text and vector graphics. To turn them into an image, the browser must "rasterize" the page — draw it onto a canvas and then read that canvas as pixels. PDF Experts uses pdf.js, the same library Firefox uses to display PDFs, to render each page at your chosen resolution before exporting.</p>
+          <p>JPG is best when file size matters and you can tolerate very small quality loss. PNG is lossless and works better for line drawings, diagrams and text-heavy pages. Resolution 2× is a good default for slides and web use; 3× is what you want for print or retina screens.</p>
+          <h2>Practical uses</h2>
+          <ul>
+            <li>Turn a PDF slide deck into image thumbnails for a CMS.</li>
+            <li>Export a signed page as a JPG for a client's records.</li>
+            <li>Send a photo of a document that must not be edited.</li>
+            <li>Feed pages into an app that only accepts image files.</li>
+          </ul>
+          <p>To go the other way, use <a href="tool-jpg-to-pdf.html">JPG to PDF</a>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="assets/js/tools-data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script>
+    window.PDF_EXPERTS_TOOL = {
+      type: "pdf-to-jpg",
+      accept: ".pdf,application/pdf",
+      multiple: false,
+      maxFiles: 1,
+      maxSizeMB: 100
+    };
+  </script>
+  <script src="assets/js/tool-runner.js"></script>
+</body>
+</html>
