@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Compression Explained — What Actually Gets Smaller | PDF Experts</title>
+  <meta name="description" content="Why some PDFs shrink dramatically when compressed and others barely change. Understand the mechanics before you compress.">
+  <link rel="canonical" href="https://pdfexperts.github.io/blog/pdf-compression-explained.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="PDF Compression Explained">
+  <meta property="og:description" content="What is actually removed when a PDF gets smaller?">
+  <meta property="og:url" content="https://pdfexperts.github.io/blog/pdf-compression-explained.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-page="blog" data-root="..">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="article-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="../blog.html">Blog</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">PDF compression explained</span>
+        </nav>
+        <p class="eyebrow">Technical · 9 min read</p>
+        <h1>PDF compression explained: what actually gets smaller</h1>
+        <div class="article-meta">
+          <span>Published January 2025</span>
+          <span>PDF Experts team</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="article-layout">
+        <article class="article-body prose">
+          <p>Compress PDF is one of the most clicked buttons on any PDF website, and also one of the least understood. People upload a 40 MB file, get a 38 MB file back and feel cheated. Or they upload a 4 MB file and get a 400 KB one and wonder what was thrown away.</p>
+          <p>The honest answer is: it depends entirely on what is in your PDF. Compression is not a magic wand; it is a set of decisions about what to keep, what to resample and what to re-encode. This article explains those decisions so you can predict what will happen before you click.</p>
+
+          <h2>What a PDF actually contains</h2>
+          <p>A PDF file is a container for a few different things:</p>
+          <ul>
+            <li><strong>Text</strong> drawn with embedded fonts.</li>
+            <li><strong>Vector graphics</strong> — lines, shapes, charts, tables.</li>
+            <li><strong>Raster images</strong> — photos, scans, screenshots.</li>
+            <li><strong>Fonts</strong> — full or subsetted.</li>
+            <li><strong>Metadata</strong> — title, author, XMP, bookmarks.</li>
+          </ul>
+          <p>Which of those takes up space tells you whether compression can help.</p>
+
+          <h2>Case 1: Text-heavy PDFs (little to gain)</h2>
+          <p>A 20-page PDF made from Word or Google Docs is usually a few hundred KB. Its size is mostly text and fonts. Text in PDFs is stored as instructions, not as pixel data, so a page of text is dramatically smaller than a photo of the same page. Recompressing text-heavy PDFs typically saves very little because most of the content is already close to minimal.</p>
+          <p>If you want to squeeze a text PDF, the most effective trick is <strong>font subsetting</strong> — embedding only the glyphs the document actually uses. Many PDF producers already do this automatically, but not all. A good compressor can save 20–40% on a text PDF by removing unused font data.</p>
+
+          <h2>Case 2: Scanned or photo-heavy PDFs (lots to gain)</h2>
+          <p>A scanned PDF is, from a computer's point of view, a series of full-page images. A 300 DPI colour scan of a single A4 page can easily be 3–5 MB. Multiply by 20 pages and you have a 60–100 MB file.</p>
+          <p>Compression on this kind of file typically does three things:</p>
+          <ol>
+            <li><strong>Downsamples the images.</strong> A 300 DPI scan downsamples to 150 DPI and becomes roughly four times smaller, since pixels shrink on both axes.</li>
+            <li><strong>Re-encodes as JPEG.</strong> A PNG or TIFF source is often converted to JPEG, which is much more compact for photos and scans.</li>
+            <li><strong>Reduces JPEG quality.</strong> Going from quality 90 to quality 75 typically cuts the file in half with almost no visible difference at reading size.</li>
+          </ol>
+          <p>Together, these three steps can shrink a 40 MB scan to 4 MB or less. This is where the dramatic "PDF compress" stories come from.</p>
+
+          <h2>Case 3: Vector-heavy PDFs (moderate)</h2>
+          <p>Charts, diagrams, CAD exports and slide decks made in Illustrator are usually vector. They can also include images. Compression on these files usually does not help much because vector data is already compact; a graph of 100 lines is smaller than a single photo of a graph.</p>
+          <p>If a vector-heavy PDF is large, the size is probably coming from embedded images. Compressing those images (and leaving vectors alone) is the right approach.</p>
+
+          <h2>The trade-offs nobody mentions</h2>
+          <p>Compression is lossy in a specific sense: the pixels you throw away are gone. For reading on screen, this almost never matters. For the following situations, compress carefully:</p>
+          <ul>
+            <li><strong>Legal filings and contracts.</strong> Some courts and notary services reject visibly compressed scans. Verify the result looks professional.</li>
+            <li><strong>Medical imaging and technical drawings.</strong> Detail at the edges carries meaning. Over-compressed scans lose thin lines and small text.</li>
+            <li><strong>Archival copies.</strong> Compression is for sharing, not for the copy you keep forever. Archive the original, share the compressed one.</li>
+          </ul>
+          <p>If you are unsure, always keep the original. Compression is not reversible; once quality is lost, you cannot restore it.</p>
+
+          <h2>What a good compressor actually does</h2>
+          <p>Different tools make different trade-offs. A well-behaved compressor:</p>
+          <ul>
+            <li><strong>Keeps text as text.</strong> Re-rendering text as an image to make it "smaller" is a red flag; it kills searchability and file size usually gets worse.</li>
+            <li><strong>Preserves vectors.</strong> Charts should stay charts.</li>
+            <li><strong>Only downsamples images that are over the target DPI.</strong> A 150 DPI scan does not need further downsampling at typical quality settings.</li>
+            <li><strong>Keeps embedded fonts intact.</strong> Losing a font means text falls back to Helvetica, which can look wrong.</li>
+            <li><strong>Lets you choose the target quality.</strong> You should not have to guess whether "medium" means 150 DPI or 200 DPI.</li>
+          </ul>
+
+          <h2>What to check after compressing</h2>
+          <p>When you get the compressed file back, do a quick self-check:</p>
+          <ol>
+            <li>Open the PDF and compare page 1 side by side with the original.</li>
+            <li>Zoom into some small text. It should still be crisp, not blocky.</li>
+            <li>Check that images still contain the colours you expect (JPEG compression can tint saturated areas).</li>
+            <li>Verify the file still opens on your phone or tablet, not just your laptop.</li>
+          </ol>
+
+          <h2>Final word</h2>
+          <p>PDF compression is not one thing; it is a set of decisions about how much detail to trade for size. Text-heavy files have little to give up. Scanned and photo-heavy files have plenty. Vector-heavy files are usually already efficient, but their embedded images may still be worth compressing.</p>
+          <p>Our <strong>Compress PDF</strong> tool is in progress — it will run locally in the browser, let you choose a target quality, and show you the before-and-after file size before you download. Until then, the other tools on the site can already help: <a href="../tool-split.html">Split PDF</a> to break up a huge file, <a href="../tool-crop.html">Crop PDF</a> to remove wasted margin whitespace, and <a href="../tool-pdf-to-jpg.html">PDF to JPG</a> to convert individual pages you want to shrink further.</p>
+        </article>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Related tools</h2>
+            <ul class="related-list">
+              <li><a href="../tool-split.html">Split PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-crop.html">Crop PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-pdf-to-jpg.html">PDF to JPG <span aria-hidden="true">→</span></a></li>
+            </ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="../assets/js/tools-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
