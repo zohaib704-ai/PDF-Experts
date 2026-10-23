@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merge PDF — Combine PDF Files in Your Browser | PDF Experts</title>
+  <meta name="description" content="Merge multiple PDF files into one document for free. All processing happens in your browser — your PDFs are never uploaded to a server.">
+  <link rel="canonical" href="https://pdfexperts.github.io/tool-merge.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="Merge PDF — Combine PDF Files Locally">
+  <meta property="og:description" content="Combine several PDFs into one file in seconds. Runs entirely in your browser.">
+  <meta property="og:url" content="https://pdfexperts.github.io/tool-merge.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="tool" data-tool="merge-pdf" data-root=".">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="tool-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="index.html#tools">Tools</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">Merge PDF</span>
+        </nav>
+        <h1>Merge PDF</h1>
+        <p class="lede">Combine several PDF files into one clean document. Drag, reorder and merge — without uploading anything.</p>
+      </div>
+    </section>
+
+    <section class="tool-layout-section">
+      <div class="container tool-layout">
+        <div class="tool-workspace">
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+            Your files never leave your device. All merging happens locally in your browser.
+          </div>
+
+          <label class="dropzone" id="dropzone" aria-label="Add PDF files">
+            <input type="file" id="file-input" accept=".pdf,application/pdf" multiple>
+            <div class="dropzone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="m6 10 6-6 6 6"/><path d="M4 20h16"/></svg>
+            </div>
+            <h2>Drop PDF files here</h2>
+            <p>or click to browse — up to 20 files, 100 MB each</p>
+          </label>
+
+          <div class="file-list-wrap">
+            <div class="file-list-head">
+              <span id="file-count">0 files</span>
+              <button type="button" class="btn btn-ghost btn-small" id="clear-all" hidden>Clear all</button>
+            </div>
+            <ul class="file-list" id="file-list"></ul>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" id="process-btn" disabled>Merge PDF</button>
+            <button class="btn btn-ghost" id="reset-btn" type="button">Reset</button>
+          </div>
+
+          <div class="error-box" id="error-box" role="alert" hidden></div>
+
+          <div class="progress-wrap" id="progress-wrap" hidden>
+            <div class="progress-head">
+              <span id="progress-text">Processing…</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+          </div>
+
+          <div class="result-box" id="result-box" hidden>
+            <h2>Your merged PDF is ready</h2>
+            <p id="result-meta"></p>
+            <a class="btn btn-primary download-btn" id="download-btn" download>Download merged PDF</a>
+            <div class="ad-slot ad-inline" aria-label="Advertisement"><span>Advertisement</span></div>
+          </div>
+        </div>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Related tools</h2>
+            <ul class="related-list" id="related-tools"></ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tool-seo">
+      <div class="container">
+        <div class="seo-copy">
+          <h2>How merging works in PDF Experts</h2>
+          <p>The Merge PDF tool loads each PDF you add into your browser's memory using a small WebAssembly-free JavaScript library. Every page is copied into a brand new document, in the order you choose, and the result is saved back to your disk. Because nothing leaves the page, the tool works offline once it has loaded and never sends a request containing your files.</p>
+          <p>You can reorder files with the up and down arrows in the file list before merging. If a PDF is password-protected or corrupted, the tool skips it and shows you a clear error instead of failing silently. Page numbers from the source documents are preserved unless you use the Page Numbers tool first to normalise them.</p>
+          <h2>When to use Merge PDF</h2>
+          <ul>
+            <li>Combine a signed contract, an appendix and an invoice into a single PDF.</li>
+            <li>Join weekly reports into a monthly document.</li>
+            <li>Assemble scanned pages from separate PDFs into one submission.</li>
+            <li>Prepare a portfolio from several smaller exports.</li>
+          </ul>
+          <p>If your PDFs contain mixed page orientations, the merged file will keep each page in its own orientation. To standardise orientation first, rotate pages with the <a href="tool-rotate.html">Rotate PDF</a> tool before merging.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="assets/js/tools-data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script>
+    window.PDF_EXPERTS_TOOL = {
+      type: "merge",
+      accept: ".pdf,application/pdf",
+      multiple: true,
+      maxFiles: 20,
+      maxSizeMB: 100
+    };
+  </script>
+  <script src="assets/js/tool-runner.js"></script>
+</body>
+</html>
