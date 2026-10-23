@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Merge PDFs Without Uploading Them to a Server | PDF Experts</title>
+  <meta name="description" content="Learn why uploading a PDF to a random tool is risky, and how to merge PDFs entirely in your browser with zero uploads.">
+  <link rel="canonical" href="https://pdfexperts.github.io/blog/merge-pdf-without-uploading.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="How to Merge PDFs Without Uploading Them to a Server">
+  <meta property="og:description" content="A practical guide to private PDF merging.">
+  <meta property="og:url" content="https://pdfexperts.github.io/blog/merge-pdf-without-uploading.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-page="blog" data-root="..">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="article-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="../blog.html">Blog</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">Merge PDFs privately</span>
+        </nav>
+        <p class="eyebrow">Privacy · 8 min read</p>
+        <h1>How to merge PDFs without uploading them to a server</h1>
+        <div class="article-meta">
+          <span>Published January 2025</span>
+          <span>PDF Experts team</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="article-layout">
+        <article class="article-body prose">
+          <p>If you have ever needed to combine a signed contract, a bank statement or a doctor's letter into a single PDF, you have probably searched for a "merge PDF" tool and dropped the file onto the first one that appeared. It is fast, it usually works, and it is quietly one of the riskiest things people do with private documents online.</p>
+          <p>This guide explains the actual risk, what a "local" merge means in practice, and how to do it in under a minute using your own browser.</p>
+
+          <h2>The real problem with upload-based PDF tools</h2>
+          <p>When a merge tool asks you to upload a file, here is what happens on the server side, in broad strokes:</p>
+          <ul>
+            <li>Your file is transferred over HTTPS to a machine you don't control.</li>
+            <li>It is written to disk, at least temporarily, so another process can merge it.</li>
+            <li>Multiple files are combined and returned to you.</li>
+            <li>How long the copy remains, who can access it, and whether it is backed up are all determined by the operator — not you.</li>
+          </ul>
+          <p>Most reputable tools say they delete files "within a few hours". That is fine. But "a few hours" on a shared filesystem is not the same as "never left your device", and for documents that contain your address, ID numbers, signatures or medical history, the difference matters.</p>
+          <p>There are also more boring problems: upload quotas, daily limits, ads that hide the download button, and services that quietly watermark the output. And if you are on a slow connection, uploading three PDFs to a server and downloading them again is far slower than just joining them on your laptop.</p>
+
+          <h2>What "processing locally" actually means</h2>
+          <p>Modern web browsers ship with almost everything a PDF tool needs. Two open-source libraries do the heavy lifting:</p>
+          <ul>
+            <li><strong>pdf-lib</strong> can create, modify and merge PDF documents in plain JavaScript. It parses the file structure, copies pages between documents and serialises a new PDF back to bytes.</li>
+            <li><strong>pdf.js</strong> can render PDF pages into a canvas so you can look at them in a browser tab.</li>
+          </ul>
+          <p>Both run inside the same tab as the page. When you click "Merge", the browser reads the file from your disk into memory, hands those bytes to pdf-lib, and produces a new <code>Blob</code> containing the merged PDF. The Blob is turned into a download link with <code>URL.createObjectURL</code>, and your browser writes it to the folder you chose. There is no request to any server that contains your file — not even a fraction of it.</p>
+          <p>You can verify this yourself: open your browser's developer tools, switch to the Network tab, and watch the requests. You will see the page load its own assets and fonts. You will not see a POST containing your PDF.</p>
+
+          <h2>A step-by-step walkthrough</h2>
+          <ol>
+            <li><strong>Open the tool.</strong> Visit the <a href="../tool-merge.html">Merge PDF</a> page. Everything you need is on that page; nothing loads on demand from another server once the libraries have been cached.</li>
+            <li><strong>Add your files.</strong> Drag them onto the dropzone, or click it to open your file picker. You can add several at once. Each file is read locally and listed with its name and size.</li>
+            <li><strong>Reorder if needed.</strong> Use the up and down arrows next to each file. The final PDF follows this order exactly.</li>
+            <li><strong>Merge.</strong> Click the merge button. A progress bar shows how far along the merge is. For typical office PDFs this takes a second or two.</li>
+            <li><strong>Download.</strong> A green "Download" button appears when the file is ready. Click it and save the result wherever you want.</li>
+          </ol>
+
+          <h2>Things to watch out for</h2>
+          <p>Even a local merge has a few practical limits:</p>
+          <ul>
+            <li><strong>Encrypted PDFs.</strong> If a PDF requires a password to open, the tool will refuse to load it. You need to decrypt it first (with the password you know) in a PDF reader, or use an "unlock" tool with the password.</li>
+            <li><strong>Corrupted files.</strong> A PDF whose structure has been damaged may load but fail to merge. Try opening it in a PDF reader first to confirm it is healthy.</li>
+            <li><strong>Very large files.</strong> The browser keeps everything in memory during the merge. A 500 MB file on an older laptop may be slow. If you run into that, split the merge into chunks and merge the chunks at the end.</li>
+            <li><strong>Scanned PDFs.</strong> Merging a scanned PDF does not make it searchable — OCR is a separate step (coming soon as the OCR PDF tool).</li>
+          </ul>
+
+          <h2>Why this matters beyond privacy</h2>
+          <p>Local processing is not only a privacy feature. It is also a resilience feature. Once the page has loaded, the tools work offline. They work on a train, on a plane, behind a firewall, in a country that blocks the ads a traditional PDF site relies on. They do not depend on the operator's uptime, they do not stop working if the service shuts down, and they do not start charging you suddenly.</p>
+          <p>That is the quiet promise of the modern browser: it is not just a viewer of a server-side world. It is a computer, and it can do real work on its own.</p>
+
+          <h2>Try it yourself</h2>
+          <p>If you take nothing else from this article, take this: the next time a tool asks you to upload a private PDF to a random website, ask yourself whether it needs to. For merging, splitting, rotating, cropping and page numbers, the answer is almost always no. Try the <a href="../tool-merge.html">Merge PDF</a> tool and watch the Network tab — that is the whole story.</p>
+        </article>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Try the tool</h2>
+            <ul class="related-list">
+              <li><a href="../tool-merge.html">Merge PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-split.html">Split PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-organize.html">Organize PDF <span aria-hidden="true">→</span></a></li>
+            </ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="../assets/js/tools-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
