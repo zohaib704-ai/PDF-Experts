@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotate, Crop and Organize — Preparing a Scan for Professional Use | PDF Experts</title>
+  <meta name="description" content="A practical workflow for turning a messy scan into a professional PDF: fix orientation, remove margins, then reorder the pages.">
+  <link rel="canonical" href="https://pdfexperts.github.io/blog/rotate-crop-organize-pdf.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="Preparing a Scan for Professional Use">
+  <meta property="og:description" content="Rotate, crop and organize your scan before you send it.">
+  <meta property="og:url" content="https://pdfexperts.github.io/blog/rotate-crop-organize-pdf.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-page="blog" data-root="..">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="article-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="../blog.html">Blog</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">Preparing a scan</span>
+        </nav>
+        <p class="eyebrow">How-to · 7 min read</p>
+        <h1>Rotate, crop and organize: preparing a scan for professional use</h1>
+        <div class="article-meta">
+          <span>Published January 2025</span>
+          <span>PDF Experts team</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="article-layout">
+        <article class="article-body prose">
+          <p>Scanners are not always careful. Pages come out sideways. A file gets saved with huge blank margins around the content. A batch job merges pages in the wrong order. When that happens, the right response is not to rescan; it is to fix the PDF.</p>
+          <p>This is a short guide to a three-step cleanup workflow using the Rotate, Crop and Organize tools on PDF Experts. Every step runs in the browser, so a scan of a passport or a signed contract never has to leave your device.</p>
+
+          <h2>Step 1: Fix the orientation</h2>
+          <p>If your pages are sideways or upside down, fix the rotation before anything else. Cropping or reordering a PDF whose pages are still rotated is confusing, and you can end up with a document where half the pages are correct and half need work again.</p>
+          <p>Use the <a href="../tool-rotate.html">Rotate PDF</a> tool. Typical fixes:</p>
+          <ul>
+            <li><strong>Sideways landscape scan saved as portrait.</strong> Rotate all pages by 90° clockwise (or 270° if the text ends up upside down).</li>
+            <li><strong>Single upside-down page in a mixed scan.</strong> Choose "Selected pages", enter the page numbers, and rotate those by 180°.</li>
+            <li><strong>Front of the page fine but the back upside down.</strong> Rotate the even-numbered pages by 180°.</li>
+          </ul>
+          <p>The tool does not re-render anything. It only flips a rotation flag on each page, so quality is untouched. If you rotate the wrong way, apply the opposite rotation to reverse it — rotation is cumulative, and 90° + 270° is 360°.</p>
+
+          <h2>Step 2: Trim the margins</h2>
+          <p>A scanner will typically add 5–15 mm of white space around each page, sometimes unevenly. On a phone screen that is wasted real estate; in print it can be waste you are paying for. Trimming also makes the document look intentional rather than "scanned".</p>
+          <p>Use the <a href="../tool-crop.html">Crop PDF</a> tool. It works on the page's CropBox and MediaBox, which are the two boxes that tell a PDF reader (and a printer) which part of the page to show. Cropping is lossless: nothing is re-encoded, nothing becomes a raster.</p>
+          <p>Recommended settings for a typical A4 scan:</p>
+          <ul>
+            <li>Top, right, bottom, left: <strong>10 mm</strong> — a reasonable default for scanner margins.</li>
+            <li>If the scan includes a header or footer you want to lose, increase top and bottom values to <strong>15–20 mm</strong>.</li>
+            <li>If a page has handwriting in the margin you want to keep, decrease that edge to <strong>0–5 mm</strong>.</li>
+          </ul>
+          <p>After cropping, open the file and check that the first and last content is still visible — especially page numbers and signature lines.</p>
+
+          <h2>Step 3: Reorder the pages</h2>
+          <p>Reordering comes last, because it depends on the final rotation and cropping. Use the <a href="../tool-organize.html">Organize PDF</a> tool. It shows you a thumbnail of every page, so you can drag, arrow and delete pages with confidence.</p>
+          <p>Common reorder jobs for a scan:</p>
+          <ul>
+            <li><strong>Put the cover letter first.</strong> Move the cover page above the scanned pages.</li>
+            <li><strong>Fix the order of a double-sided batch.</strong> Scanners sometimes alternate front/back, which needs an interleave — but for a simple two-page fix, dragging the second page up is faster.</li>
+            <li><strong>Remove blank pages.</strong> Every 5th or 10th scan often ends up blank. Delete them all here.</li>
+          </ul>
+          <p>Deleted pages are marked but not immediately removed, so you can undo them before you rebuild. Once you click Rebuild PDF, the new file only contains the pages you kept, in the order you chose.</p>
+
+          <h2>Final steps</h2>
+          <p>After the three cleanup steps, do two quick things before sending the file anywhere:</p>
+          <ol>
+            <li><strong>Add page numbers</strong> if the document will be referenced or printed. The <a href="../tool-page-numbers.html">Page numbers</a> tool places them at the edge of the page without interfering with content.</li>
+            <li><strong>Merge with other sections</strong> if the full document includes more than this scan. <a href="../tool-merge.html">Merge PDF</a> will bring it all together.</li>
+          </ol>
+
+          <h2>When not to use this workflow</h2>
+          <p>If the scan is going to be OCR'd (converted to searchable text), do that step last. OCR reads the pixels; the cleaner your rotation and cropping, the better the text extraction. So the order becomes: rotate, crop, OCR, reorder. The OCR PDF tool is on our roadmap.</p>
+          <p>If the scan is going to be archived, keep an original untouched copy. Fixing a PDF is fine for sharing, but the archive copy should be the "flat" scan as it came from the device.</p>
+
+          <h2>The benefit of doing it in the browser</h2>
+          <p>The three-step workflow is faster than rescanning, and it is also safer than uploading scans to a random site. Government IDs, signed contracts and medical records are the scans most often "cleaned up", and also the ones you least want sitting on an unknown server. Because every tool on PDF Experts processes locally, you can do the whole cleanup without sending a single byte of the scan over the network.</p>
+          <p>Try it on your next scan: <a href="../tool-rotate.html">Rotate</a>, <a href="../tool-crop.html">Crop</a>, <a href="../tool-organize.html">Organize</a>. Three steps, one private workflow.</p>
+        </article>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Try the tools</h2>
+            <ul class="related-list">
+              <li><a href="../tool-rotate.html">Rotate PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-crop.html">Crop PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-organize.html">Organize PDF <span aria-hidden="true">→</span></a></li>
+            </ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="../assets/js/tools-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
