@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JPG to PDF and Back: Preserving Image Quality in Conversion | PDF Experts</title>
+  <meta name="description" content="What actually happens to pixels when you convert images to PDF or PDF pages to JPG — and how to avoid quality loss.">
+  <link rel="canonical" href="https://pdfexperts.github.io/blog/jpg-pdf-conversion-quality.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="JPG to PDF and Back: Preserving Image Quality">
+  <meta property="og:description" content="How conversion actually affects your images.">
+  <meta property="og:url" content="https://pdfexperts.github.io/blog/jpg-pdf-conversion-quality.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-page="blog" data-root="..">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="article-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="../blog.html">Blog</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">JPG to PDF and back</span>
+        </nav>
+        <p class="eyebrow">Conversion · 8 min read</p>
+        <h1>JPG to PDF and back: preserving image quality in conversion</h1>
+        <div class="article-meta">
+          <span>Published January 2025</span>
+          <span>PDF Experts team</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="article-layout">
+        <article class="article-body prose">
+          <p>Everyone has done it: you need to send a signed document, and you only have photos of the pages on your phone. So you convert the photos to a PDF, send them off, and hope for the best. Or the reverse: you have a PDF slide deck and you need each page as a JPG for a website. Both directions are common, and both quietly ask the same question — what exactly happens to the pixels?</p>
+          <p>This article walks through image-to-PDF and PDF-to-image conversion, explains where quality is preserved and where it is lost, and offers practical settings for different outcomes.</p>
+
+          <h2>What an image-to-PDF conversion actually is</h2>
+          <p>A PDF is a container. When you convert a JPG or PNG into a PDF, the tool does not "re-encode" the image. It takes the original image bytes and embeds them inside the PDF as an XObject — an image resource with a rectangular bounding box. Then it draws that image on a page. For a JPG inside a PDF, the same JPEG data is stored verbatim. If your source photo was 2400×3200 pixels with quality 90, that is exactly what lives in the PDF.</p>
+          <p>This is why a "JPG to PDF" conversion is essentially lossless for the image itself. The only thing being chosen is the page dimensions and where the image is placed on the page. Everything you see on the page is a scaling of the embedded image.</p>
+          <p>That last point matters. If your A4 page is 210mm × 297mm and your image is 2400×3200, the PDF reader must scale the image to fit. Both viewers and printers use that scale to determine the final pixels-per-inch (PPI) — roughly 290 PPI here, which is fine for print. If your image were only 600×800 pixels, the effective PPI would drop to about 72, and a printed page would look soft.</p>
+
+          <h2>How to think about resolution</h2>
+          <p>A useful rule of thumb: for print at a normal viewing distance, aim for about <strong>300 PPI</strong>. For screen use, 100–150 PPI is plenty. Work out the needed image dimensions like this:</p>
+          <p><code>pixels = inches × PPI</code></p>
+          <p>An A4 page is 8.27 × 11.69 inches, so at 300 PPI that is roughly <strong>2481 × 3508 pixels</strong>. If your images are smaller than that, the page will still print, but detail is limited by the source.</p>
+          <p>Two practical notes:</p>
+          <ul>
+            <li>Phone cameras usually produce far more pixels than A4 needs. Downscaling (or letting the PDF reader scale) keeps files manageable without visible quality loss.</li>
+            <li>Screenshots are often 72–96 DPI by convention. They are perfectly readable on screen but may print small.</li>
+          </ul>
+
+          <h2>Where conversion does lose quality</h2>
+          <p>Two scenarios do lose quality, and it is worth knowing them:</p>
+          <h3>1. Re-encoding from JPG to JPG</h3>
+          <p>If a tool turns your image into a PNG, then re-encodes it as a JPG, then wraps it in a PDF, that is one extra compression step. It happens most often in "image compression" tools that also produce a PDF. The loss is usually invisible at quality 90+, but it is technically a lossy re-encode. Our <a href="../tool-jpg-to-pdf.html">JPG to PDF</a> tool embeds the original bytes without re-encoding, so quality is preserved exactly.</p>
+          <h3>2. PDF-to-image at a low resolution</h3>
+          <p>Going from PDF to image is inherently a rasterization: the vector content of the PDF must be drawn as pixels. Where the image is smaller than the PDF page dimensions, you are effectively downsampling. At 1× scale on a typical A4 PDF, you get about 595×842 pixels — about screen resolution. At 2×, 1190×1684. At 3×, 1786×2526. The 3× option is what you want for print or retina displays; 2× is a good compromise for the web.</p>
+
+          <h2>The reverse direction — PDF to JPG</h2>
+          <p>PDF-to-image conversion has one extra variable: the quality setting. For JPEG, quality 0.85 is a good default (about 8–10% of the original visual information lost, in a way that is almost invisible). For text-heavy documents, PNG is often a better choice because it does not blur edges, even if the file is larger.</p>
+          <p>If the source PDF contains vector art — charts, diagrams, text — rendering at a higher scale directly improves output quality. If the source PDF is itself mostly one big JPEG (for example, a photo-heavy scan), the output quality is bounded by that source image no matter how high you set the scale.</p>
+
+          <h2>Choosing the right settings</h2>
+          <p>Here is a simple decision guide:</p>
+          <ul>
+            <li><strong>Scanning a document for someone to read.</strong> JPG quality 0.8, 2× scale. Small files, easy to email.</li>
+            <li><strong>Sending a photo album.</strong> JPG quality 0.85, 2× scale, "Match image size" as PDF page size. Keeps the original feel.</li>
+            <li><strong>Printing a document.</strong> JPG quality 0.9, 3× scale. Larger files, but sharp output.</li>
+            <li><strong>Screenshotting a slide deck.</strong> PNG, 2× scale. Sharp text on every slide.</li>
+            <li><strong>Court or legal filings.</strong> JPG quality 0.9, 2× scale, and always verify by opening the file afterwards.</li>
+          </ul>
+
+          <h2>Final word</h2>
+          <p>Image-to-PDF conversions are close to lossless when done right; PDF-to-image conversions are lossy by nature, but can be made effectively invisible with the right scale and quality. The single biggest mistake people make is scaling down inadvertently — embedding small images into big pages, or rendering PDF pages at 1× when they needed 3×. Set the right dimensions and quality for the destination, and both directions stay crisp.</p>
+          <p>Both directions are available on PDF Experts, and both run locally: <a href="../tool-jpg-to-pdf.html">JPG to PDF</a> and <a href="../tool-pdf-to-jpg.html">PDF to JPG</a>.</p>
+        </article>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Try the tools</h2>
+            <ul class="related-list">
+              <li><a href="../tool-jpg-to-pdf.html">JPG to PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-pdf-to-jpg.html">PDF to JPG <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-crop.html">Crop PDF <span aria-hidden="true">→</span></a></li>
+            </ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="../assets/js/tools-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
