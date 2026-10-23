@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JPG to PDF — Combine Images Into One PDF | PDF Experts</title>
+  <meta name="description" content="Convert JPG and PNG images into a single PDF. Choose page size and orientation. Runs entirely in your browser with no uploads.">
+  <link rel="canonical" href="https://pdfexperts.github.io/tool-jpg-to-pdf.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="JPG to PDF — Private Image to PDF Conversion">
+  <meta property="og:description" content="Turn your JPG or PNG images into a single PDF without uploading them.">
+  <meta property="og:url" content="https://pdfexperts.github.io/tool-jpg-to-pdf.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="tool" data-tool="jpg-to-pdf" data-root=".">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="tool-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="index.html#tools">Tools</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">JPG to PDF</span>
+        </nav>
+        <h1>JPG to PDF</h1>
+        <p class="lede">Combine photos, scans or graphics into a single PDF with a consistent page size.</p>
+      </div>
+    </section>
+
+    <section class="tool-layout-section">
+      <div class="container tool-layout">
+        <div class="tool-workspace">
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+            Your images stay in the browser. Nothing is uploaded.
+          </div>
+
+          <label class="dropzone" id="dropzone" aria-label="Add JPG or PNG images">
+            <input type="file" id="file-input" accept=".jpg,.jpeg,.png,image/jpeg,image/png" multiple>
+            <div class="dropzone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="m21 17-5-5-9 9"/></svg>
+            </div>
+            <h2>Drop images here</h2>
+            <p>or click to browse — JPG and PNG, up to 50 files</p>
+          </label>
+
+          <div class="file-list-wrap">
+            <div class="file-list-head">
+              <span id="file-count">0 files</span>
+              <button type="button" class="btn btn-ghost btn-small" id="clear-all" hidden>Clear all</button>
+            </div>
+            <ul class="file-list" id="file-list"></ul>
+          </div>
+
+          <div class="option-panel">
+            <h2>PDF options</h2>
+            <div class="option-grid">
+              <div class="field">
+                <label for="jpg-page-size">Page size</label>
+                <select id="jpg-page-size">
+                  <option value="a4" selected>A4</option>
+                  <option value="letter">US Letter</option>
+                  <option value="auto">Match image size</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="jpg-orientation">Orientation</label>
+                <select id="jpg-orientation">
+                  <option value="auto" selected>Auto (based on image)</option>
+                  <option value="portrait">Portrait</option>
+                  <option value="landscape">Landscape</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" id="process-btn" disabled>Create PDF</button>
+            <button class="btn btn-ghost" id="reset-btn" type="button">Reset</button>
+          </div>
+
+          <div class="error-box" id="error-box" role="alert" hidden></div>
+
+          <div class="progress-wrap" id="progress-wrap" hidden>
+            <div class="progress-head">
+              <span id="progress-text">Processing…</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+          </div>
+
+          <div class="result-box" id="result-box" hidden>
+            <h2>Your PDF is ready</h2>
+            <p id="result-meta"></p>
+            <a class="btn btn-primary download-btn" id="download-btn" download>Download PDF</a>
+            <div class="ad-slot ad-inline" aria-label="Advertisement"><span>Advertisement</span></div>
+          </div>
+        </div>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Related tools</h2>
+            <ul class="related-list" id="related-tools"></ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tool-seo">
+      <div class="container">
+        <div class="seo-copy">
+          <h2>Why convert images to PDF?</h2>
+          <p>PDFs are the safest way to send images to a client, a printer or a portfolio portal. Unlike a ZIP of photos, a PDF is guaranteed to open consistently everywhere and preserves the order of pages. This tool embeds each JPG or PNG directly into a new PDF page, without recompressing the image, so quality is preserved exactly.</p>
+          <p>Choose A4 or US Letter for a print-ready document, or "Match image size" when every page should be exactly the image dimensions. Auto orientation reads each image's width and height, so a mixed album stays visually consistent — a phone photo and a landscape screenshot both look correct on their own pages.</p>
+          <h2>Recommendations</h2>
+          <ul>
+            <li>Reach for auto orientation when combining portrait and landscape photos.</li>
+            <li>Use A4 with portrait orientation for scanned documents.</li>
+            <li>For scanned PDFs that need OCR later, use one image per page (already the default).</li>
+            <li>To go the other way, try <a href="tool-pdf-to-jpg.html">PDF to JPG</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="assets/js/tools-data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script>
+    window.PDF_EXPERTS_TOOL = {
+      type: "jpg-to-pdf",
+      accept: ".jpg,.jpeg,.png,image/jpeg,image/png",
+      multiple: true,
+      maxFiles: 50,
+      maxSizeMB: 25
+    };
+  </script>
+  <script src="assets/js/tool-runner.js"></script>
+</body>
+</html>
