@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About PDF Experts — Private PDF Tools Built for Browsers</title>
+  <meta name="description" content="PDF Experts is an independent project that builds private, browser-based PDF tools. Learn what we do and why.">
+  <link rel="canonical" href="https://pdfexperts.github.io/about.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="About PDF Experts">
+  <meta property="og:description" content="The story and principles behind PDF Experts.">
+  <meta property="og:url" content="https://pdfexperts.github.io/about.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="about" data-root=".">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">About us</p>
+        <h1>A quieter toolkit for everyday PDFs.</h1>
+        <p class="lede">PDF Experts is an independent project that brings useful PDF tools back to the browser — no uploads, no accounts and no fuss.</p>
+      </div>
+    </section>
+
+    <section class="page-body container">
+      <div class="legal-card">
+        <h2>Why we built this</h2>
+        <p>Most PDF tools work the same way: you upload a file, a server processes it, and you download the result. That works, but it also means every tool you use becomes a copy of a private document stored somewhere you don't control. For personal photos, contracts, medical records and client work, that is a real trade-off.</p>
+        <p>Modern browsers are more than capable of doing the same work locally. PDF Experts exists to prove that a fully useful PDF toolkit can run entirely on your device, with zero server involvement, and still be pleasant to use.</p>
+
+        <h2>What we believe</h2>
+        <ul>
+          <li><strong>Privacy is a feature, not a setting.</strong> Every tool we ship must process files locally, without exception.</li>
+          <li><strong>Tools should be boring in the best way.</strong> They should open quickly, work on a phone, and never make you create an account.</li>
+          <li><strong>Advertising should not track files.</strong> Ads, when shown, are clearly marked, never overlay the tool and never inspect the file you opened.</li>
+          <li><strong>Speed matters.</strong> No build pipeline, no frameworks, no render blocking third-party scripts beyond a font and a couple of libraries.</li>
+        </ul>
+
+        <h2>How it works under the hood</h2>
+        <p>PDF Experts is a fully static site. It loads four things: the page HTML, a small stylesheet, a few kilobytes of vanilla JavaScript, and the open-source libraries that actually touch the PDF — <a href="https://pdf-lib.js.org/" rel="nofollow noopener">pdf-lib</a> for building PDFs and <a href="https://mozilla.github.io/pdf.js/" rel="nofollow noopener">pdf.js</a> for reading them. Everything else is our own code. When you drop a file, the browser reads it into memory and hands it to those libraries directly. There is no network request for your file at any point.</p>
+
+        <h2>Who we are</h2>
+        <p>PDF Experts is a small, independent project run by a web developer who got tired of uploading a passport scan to a random tool just to merge two pages together. We are not a company, we don't have investors and we are not trying to become a SaaS product. We are trying to make the web work a little more like it used to: fast, local, respectful.</p>
+
+        <h2>Contact</h2>
+        <p>Questions, bug reports and tool requests are welcome. Reach us through the <a href="contact.html">contact page</a> or email <strong>hello@pdfexperts.site</strong>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="assets/js/tools-data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
