@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splitting a Large PDF Safely — Chunks, Ranges and Archive Tips | PDF Experts</title>
+  <meta name="description" content="How to split big PDF files without losing quality, page order or private data. Practical advice from the PDF Experts team.">
+  <link rel="canonical" href="https://pdfexperts.github.io/blog/split-large-pdf-safely.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="Splitting a Large PDF Safely">
+  <meta property="og:description" content="Chunk sizes, page ranges and archive tips for large PDFs.">
+  <meta property="og:url" content="https://pdfexperts.github.io/blog/split-large-pdf-safely.html">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-page="blog" data-root="..">
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="article-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="../blog.html">Blog</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">Splitting a large PDF safely</span>
+        </nav>
+        <p class="eyebrow">How-to · 7 min read</p>
+        <h1>Splitting a large PDF safely: chunk sizes, page ranges and archive tips</h1>
+        <div class="article-meta">
+          <span>Published January 2025</span>
+          <span>PDF Experts team</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="article-layout">
+        <article class="article-body prose">
+          <p>Large PDFs are a fact of working life: a 200-page tender pack, a year of bank statements, a book-length scan. Sooner or later, someone asks you to break the file up. Maybe an upload form has a size limit. Maybe the recipient only needs one section. Maybe you want to redact a single page.</p>
+          <p>This guide is about doing that splitting cleanly. We will cover the three main ways to split a PDF, when to use each, and how to keep the result accurate.</p>
+
+          <h2>The three kinds of "split"</h2>
+          <p>The word "split" hides three different jobs. Getting clear on which one you need will save you time.</p>
+          <h3>1. One page per file</h3>
+          <p>This is the strictest split: turn a 100-page PDF into 100 one-page PDFs. Use it when:</p>
+          <ul>
+            <li>You need to embed each page separately somewhere.</li>
+            <li>You are sending single pages to different people.</li>
+            <li>You want to feed each page into another tool (OCR, form filling, a signature flow).</li>
+          </ul>
+          <p>Because the result is many files, a good tool packages them as a single ZIP. That is one download click, not 100.</p>
+
+          <h3>2. Chunks of N pages</h3>
+          <p>Chunking splits the PDF into equal-sized groups — every 5 pages, every 10 pages, or whatever your upload limit suggests. Use it when:</p>
+          <ul>
+            <li>An upload form caps page counts per file.</li>
+            <li>You are printing in batches.</li>
+            <li>You want each chapter or section as its own file for readers.</li>
+          </ul>
+          <p>A reasonable default for "I need to upload this somewhere" is 20 pages per file, or whatever keeps each file under a few megabytes.</p>
+
+          <h3>3. Extract a range</h3>
+          <p>This keeps only the pages you specify — pages 4 to 7, say — and produces a single new PDF. Use it when:</p>
+          <ul>
+            <li>You want to share one section of a larger document.</li>
+            <li>You need to remove everything before a title page or after an appendix.</li>
+            <li>You are preparing an exhibit for court or a filing.</li>
+          </ul>
+          <p>Extract-range is the right choice for a privacy-conscious subset: you are not just splitting, you are deliberately leaving other pages out of the file you produce.</p>
+
+          <h2>What "safely" actually means</h2>
+          <p>Three things should survive a split intact:</p>
+          <ol>
+            <li><strong>The content of each page.</strong> Text stays text. Vector drawings stay vector. Images stay at their original resolution. This is true of any good splitter, because splitting copies pages rather than re-rendering them.</li>
+            <li><strong>The order.</strong> If you have rearranged the source (using Organize PDF, for instance), the split must respect the new order, not the original.</li>
+            <li><strong>What you decided to exclude.</strong> If a page contains a bank account number you removed from the shared version, the excluded page should not appear in the final file at all, and certainly not as a hidden page.</li>
+          </ol>
+          <p>Points 1 and 2 are automatic with any tool that copies pages. Point 3 is where a browser tool is genuinely safer, because the excluded pages never reach a server.</p>
+
+          <h2>A step-by-step split</h2>
+          <ol>
+            <li><strong>Open <a href="../tool-split.html">Split PDF</a>.</strong> The page loads pdf-lib and JSZip from a public CDN. Once loaded, splitting is entirely local.</li>
+            <li><strong>Add your PDF.</strong> Drag it in or click to browse. Larger files will take a moment to load into memory.</li>
+            <li><strong>Choose the split mode.</strong> "Split every page" gives one file per page. "Split into chunks" lets you pick a size. "Extract a range" lets you keep a page range.</li>
+            <li><strong>Configure the range if needed.</strong> Page numbers follow the source PDF, starting at 1 for the first page you see.</li>
+            <li><strong>Click Split PDF.</strong> The progress bar shows how many parts have been built. A ZIP (or a single PDF for extract-range) downloads at the end.</li>
+          </ol>
+
+          <h2>Naming and archiving</h2>
+          <p>PDF Experts names the outputs consistently: <code>pages-01-05.pdf</code>, <code>pages-06-10.pdf</code>, and so on. For extract-range, the file is named after the range you chose: <code>extracted-pages-4-7.pdf</code>. This makes sorting in a file manager predictable.</p>
+          <p>A few tips that make a real difference when you split long documents:</p>
+          <ul>
+            <li><strong>Keep the source intact.</strong> Never overwrite the original. You want the full document available if a page turns out to be missing.</li>
+            <li><strong>Add a README.</strong> When sending a ZIP of split parts, include a small text file that says what each part covers.</li>
+            <li><strong>Number before splitting.</strong> If your PDF is not already numbered, add page numbers with the <a href="../tool-page-numbers.html">Page numbers</a> tool first. Each chunk will then carry its own navigation clue.</li>
+            <li><strong>Verify page counts.</strong> After the split, open two random chunks and confirm the first and last page are the ones you expected.</li>
+          </ul>
+
+          <h2>Avoiding common mistakes</h2>
+          <p><strong>Mixing up extract-range with delete.</strong> Extract-range keeps what you specify. If you want to remove pages, use <a href="../tool-organize.html">Organize PDF</a>, which shows you the pages you are about to drop.</p>
+          <p><strong>Splitting an encrypted PDF.</strong> If a PDF opens only after you type a password, the tool cannot read it. Decrypt it first, then split.</p>
+          <p><strong>Relying on the "first page" of a merged PDF.</strong> When you merge several files, the "first page" is the first page of the first file. If you then split that merged file into chunks, the page numbering is over the merged document, not the originals. If that matters, split the originals separately.</p>
+
+          <h2>Wrapping up</h2>
+          <p>Splitting a PDF is not hard, but doing it in a way that preserves content, order and privacy is worth a few minutes of care. The right mode, a quick verification step and a bit of naming discipline will save you from almost every problem people have with split files. And because it all runs in your browser, your documents never leave your device — which is a good habit to build.</p>
+        </article>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Try the tool</h2>
+            <ul class="related-list">
+              <li><a href="../tool-split.html">Split PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-organize.html">Organize PDF <span aria-hidden="true">→</span></a></li>
+              <li><a href="../tool-page-numbers.html">Page numbers <span aria-hidden="true">→</span></a></li>
+            </ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="../assets/js/tools-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
