@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watermark PDF — Add Text Watermarks Privately | PDF Experts</title>
+  <meta name="description" content="Stamp custom text watermarks onto every PDF page. Choose text, size, angle, color, opacity and repetition. Runs locally in your browser — no uploads.">
+  <link rel="canonical" href="https://pdfexperts.github.io/tool-watermark.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="Watermark PDF — Private, In-Browser">
+  <meta property="og:description" content="Add a diagonal or tiled text watermark to any PDF, locally.">
+  <meta property="og:url" content="https://pdfexperts.github.io/tool-watermark.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Watermark PDF — Private, In-Browser">
+  <meta name="twitter:description" content="Add a text watermark to any PDF without uploading it.">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script>
+    try {
+      var savedTheme = localStorage.getItem("pdfx-theme");
+      if (savedTheme === "dark" || savedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    } catch (error) {}
+  </script>
+</head>
+<body data-page="tool" data-tool="watermark" data-root=".">
+
+  <header class="site-header">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="PDF Experts home">
+        <img class="brand-mark" src="assets/img/logo.svg" width="40" height="40" alt="">
+        <span class="brand-text">PDF Experts<small>Private PDF toolkit</small></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-links" id="nav-links">
+          <li><a class="nav-link" data-key="home" href="index.html#tools">Tools</a></li>
+          <li><a class="nav-link" data-key="blog" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" data-key="about" href="about.html">About</a></li>
+          <li><a class="nav-link" data-key="contact" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 15.3A8.5 8.5 0 0 1 8.7 4 8.5 8.5 0 1 0 20 15.3Z"/></svg>
+        </button>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="tool-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="index.html#tools">Tools</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">Watermark</span>
+        </nav>
+        <h1>Watermark PDF</h1>
+        <p class="lede">Stamp a visible text watermark across every page — for drafts, confidential documents and internal reviews.</p>
+      </div>
+    </section>
+
+    <section class="tool-layout-section">
+      <div class="container tool-layout">
+        <div class="tool-workspace">
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+            Your PDF is watermarked in the browser. Nothing is uploaded.
+          </div>
+
+          <label class="dropzone" id="dropzone" aria-label="Add a PDF file">
+            <input type="file" id="file-input" accept=".pdf,application/pdf">
+            <div class="dropzone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M12 3v6"/><path d="M12 15v6"/><path d="M3 12h6"/><path d="M15 12h6"/></svg>
+            </div>
+            <h2>Drop a PDF here</h2>
+            <p>or click to browse — up to 100 MB</p>
+          </label>
+
+          <div class="file-list-wrap">
+            <div class="file-list-head">
+              <span id="file-count">0 files</span>
+              <button type="button" class="btn btn-ghost btn-small" id="clear-all" hidden>Clear</button>
+            </div>
+            <ul class="file-list" id="file-list"></ul>
+          </div>
+
+          <div class="option-panel">
+            <h2>Watermark options</h2>
+            <div class="option-grid">
+              <div class="field">
+                <label for="wm-text">Watermark text</label>
+                <input type="text" id="wm-text" value="CONFIDENTIAL" maxlength="40">
+                <small>Two or three words read best.</small>
+              </div>
+              <div class="field">
+                <label for="wm-color">Color</label>
+                <input type="color" id="wm-color" value="#9b1c1c">
+              </div>
+              <div class="field">
+                <label for="wm-size">Font size</label>
+                <input type="number" id="wm-size" min="8" max="200" value="60">
+                <small>Points. Larger text fills more of the page.</small>
+              </div>
+              <div class="field">
+                <label for="wm-opacity">Opacity</label>
+                <input type="number" id="wm-opacity" min="0.05" max="1" step="0.05" value="0.25">
+                <small>0.15–0.35 is subtle but readable.</small>
+              </div>
+              <div class="field">
+                <label for="wm-angle">Angle (degrees)</label>
+                <input type="number" id="wm-angle" min="-180" max="180" value="45">
+                <small>45° diagonal, 0° horizontal.</small>
+              </div>
+              <div class="field">
+                <label for="wm-repeat">Layout</label>
+                <select id="wm-repeat">
+                  <option value="single" selected>Single centered</option>
+                  <option value="tile">Tiled pattern</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" id="process-btn" disabled>Apply watermark</button>
+            <button class="btn btn-ghost" id="reset-btn" type="button">Reset</button>
+          </div>
+
+          <div class="error-box" id="error-box" role="alert" hidden></div>
+
+          <div class="progress-wrap" id="progress-wrap" hidden>
+            <div class="progress-head">
+              <span id="progress-text">Processing…</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+          </div>
+
+          <div class="result-box" id="result-box" hidden>
+            <h2>Your watermarked PDF is ready</h2>
+            <p id="result-meta"></p>
+            <a class="btn btn-primary download-btn" id="download-btn" download>Download watermarked PDF</a>
+            <div class="ad-slot ad-inline" aria-label="Advertisement"><span>Advertisement</span></div>
+          </div>
+        </div>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Related tools</h2>
+            <ul class="related-list" id="related-tools"></ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tool-seo">
+      <div class="container">
+        <div class="seo-copy">
+          <h2>Professional watermarks without the risk</h2>
+          <p>A watermark tells a reader something important about a document: it is a draft, it is confidential, or it belongs to a specific reviewer. The Watermark tool draws a real text layer on every page — selectable, searchable and consistent — rather than pasting an image.</p>
+          <p>Use opacity between 0.15 and 0.35 for a subtle mark that doesn't interfere with the content. Larger text works better for tall "CONFIDENTIAL" marks. The tiled pattern is useful for statement pages, exam papers and internal decks where you want every corner protected.</p>
+          <h2>Best practices</h2>
+          <ul>
+            <li>Keep the watermark text short — two or three words read best.</li>
+            <li>Contrast helps: dark red, black or navy at low opacity look professional.</li>
+            <li>Watermarks are a deterrent, not a security measure. For real protection use Protect PDF (coming soon).</li>
+            <li>Pair with <a href="tool-page-numbers.html">Page numbers</a> for reviewer-ready output.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <img class="brand-mark" src="assets/img/logo.svg" width="40" height="40" alt="">
+            <span class="brand-text">PDF Experts<small>Private PDF toolkit</small></span>
+          </a>
+          <p>Free, browser-based PDF tools built for people who care about privacy. No uploads, no accounts, no waiting.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Popular tools</h3>
+          <ul>
+            <li><a href="tool-merge.html">Merge PDF</a></li>
+            <li><a href="tool-split.html">Split PDF</a></li>
+            <li><a href="tool-organize.html">Organize PDF</a></li>
+            <li><a href="tool-pdf-to-jpg.html">PDF to JPG</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html#how-it-works">How it works</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy.html">Privacy policy</a></li>
+            <li><a href="terms.html">Terms of service</a></li>
+            <li><a href="privacy.html#cookies">Cookie policy</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="year">2025</span> PDF Experts. All rights reserved.</span>
+        <span class="footer-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6Z"/></svg>
+          Files never leave your device.
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <noscript>
+    <div class="container" style="padding: 20px;">
+      <p><strong>JavaScript is required.</strong> PDF Experts processes files locally in your browser, so JavaScript must be enabled to use the tools.</p>
+    </div>
+  </noscript>
+
+  <script src="assets/js/tools-data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script>
+    window.PDF_EXPERTS_TOOL = {
+      type: "watermark",
+      accept: ".pdf,application/pdf",
+      multiple: false,
+      maxFiles: 1,
+      maxSizeMB: 100
+    };
+  </script>
+  <script src="assets/js/tool-runner.js"></script>
+</body>
+</html>
