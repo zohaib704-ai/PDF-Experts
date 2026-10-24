@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Page Numbers to PDF — Free, Private, In-Browser | PDF Experts</title>
+  <meta name="description" content="Insert clean page numbers into any PDF. Choose position, starting number and format. Runs locally in your browser.">
+  <link rel="canonical" href="https://pdfexperts.github.io/tool-page-numbers.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PDF Experts">
+  <meta property="og:title" content="Add Page Numbers to PDF">
+  <meta property="og:description" content="Insert clean page numbers into any PDF without uploading it.">
+  <meta property="og:url" content="https://pdfexperts.github.io/tool-page-numbers.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="tool" data-tool="page-numbers" data-root=".">
+
+  <header class="site-header">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="PDF Experts home">
+        <img class="brand-mark" src="assets/img/logo.svg" width="40" height="40" alt="">
+        <span class="brand-text">PDF Experts<small>Private PDF toolkit</small></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-links" id="nav-links">
+          <li><a class="nav-link" data-key="home" href="index.html#tools">Tools</a></li>
+          <li><a class="nav-link" data-key="blog" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" data-key="about" href="about.html">About</a></li>
+          <li><a class="nav-link" data-key="contact" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 15.3A8.5 8.5 0 0 1 8.7 4 8.5 8.5 0 1 0 20 15.3Z"/></svg>
+        </button>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="tool-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a> <span aria-hidden="true">/</span>
+          <a href="index.html#tools">Tools</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">Page numbers</span>
+        </nav>
+        <h1>Add page numbers</h1>
+        <p class="lede">Stamp consistent page numbers onto every page of your PDF, with fine control over position and format.</p>
+      </div>
+    </section>
+
+    <section class="tool-layout-section">
+      <div class="container tool-layout">
+        <div class="tool-workspace">
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+            The PDF is processed locally — no uploads.
+          </div>
+
+          <label class="dropzone" id="dropzone" aria-label="Add a PDF file">
+            <input type="file" id="file-input" accept=".pdf,application/pdf">
+            <div class="dropzone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/><circle cx="18" cy="18" r="2"/></svg>
+            </div>
+            <h2>Drop a PDF here</h2>
+            <p>or click to browse</p>
+          </label>
+
+          <div class="file-list-wrap">
+            <div class="file-list-head">
+              <span id="file-count">0 files</span>
+              <button type="button" class="btn btn-ghost btn-small" id="clear-all" hidden>Clear</button>
+            </div>
+            <ul class="file-list" id="file-list"></ul>
+          </div>
+
+          <div class="option-panel">
+            <h2>Numbering options</h2>
+            <div class="option-grid">
+              <div class="field">
+                <label for="pn-position">Position</label>
+                <select id="pn-position">
+                  <option value="bottom-center" selected>Bottom center</option>
+                  <option value="bottom-right">Bottom right</option>
+                  <option value="bottom-left">Bottom left</option>
+                  <option value="top-center">Top center</option>
+                  <option value="top-right">Top right</option>
+                  <option value="top-left">Top left</option>
+                  <option value="middle-center">Middle center</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="pn-format">Format</label>
+                <select id="pn-format">
+                  <option value="n" selected>1, 2, 3</option>
+                  <option value="n-of-total">Page 1 of N</option>
+                  <option value="num-total">1 / N</option>
+                  <option value="dash">— 1 —</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="pn-start">Start at</label>
+                <input type="number" id="pn-start" min="1" value="1">
+              </div>
+              <div class="field">
+                <label for="pn-size">Font size</label>
+                <input type="number" id="pn-size" min="6" max="48" value="12">
+              </div>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" id="process-btn" disabled>Add page numbers</button>
+            <button class="btn btn-ghost" id="reset-btn" type="button">Reset</button>
+          </div>
+
+          <div class="error-box" id="error-box" role="alert" hidden></div>
+
+          <div class="progress-wrap" id="progress-wrap" hidden>
+            <div class="progress-head">
+              <span id="progress-text">Processing…</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+          </div>
+
+          <div class="result-box" id="result-box" hidden>
+            <h2>Your numbered PDF is ready</h2>
+            <p id="result-meta"></p>
+            <a class="btn btn-primary download-btn" id="download-btn" download>Download numbered PDF</a>
+            <div class="ad-slot ad-inline" aria-label="Advertisement"><span>Advertisement</span></div>
+          </div>
+        </div>
+
+        <aside class="tool-sidebar">
+          <div class="tool-sidebar-card">
+            <h2>Related tools</h2>
+            <ul class="related-list" id="related-tools"></ul>
+          </div>
+          <div class="ad-slot ad-sidebar" aria-label="Advertisement"><span>Advertisement</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="tool-seo">
+      <div class="container">
+        <div class="seo-copy">
+          <h2>Why add page numbers?</h2>
+          <p>Page numbers turn a stack of pages into a navigable document. When your PDF is sent to a printer, a client or a court, "see page 12" only works if page 12 is labelled. PDF Experts stamps the numbers as real, selectable text so they survive search, copy-paste and screen readers.</p>
+          <p>Choose between simple numbers, "Page N of M", or an en-dash style that blends into printed books. Starting number lets you continue numbering from a previous document — great when you are building a single report from multiple PDFs, using <a href="tool-merge.html">Merge PDF</a> first.</p>
+          <h2>Recommendations</h2>
+          <ul>
+            <li>Use font size 10–12 for A4 and Letter pages.</li>
+            <li>Bottom-center is the safest position for printing.</li>
+            <li>Bottom-right is common for reports and legal documents.</li>
+            <li>If your pages already have numbers, use "Start at" to avoid duplicates.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <img class="brand-mark" src="assets/img/logo.svg" width="40" height="40" alt="">
+            <span class="brand-text">PDF Experts<small>Private PDF toolkit</small></span>
+          </a>
+          <p>Free, browser-based PDF tools built for people who care about privacy. No uploads, no accounts, no waiting.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Popular tools</h3>
+          <ul>
+            <li><a href="tool-merge.html">Merge PDF</a></li>
+            <li><a href="tool-split.html">Split PDF</a></li>
+            <li><a href="tool-organize.html">Organize PDF</a></li>
+            <li><a href="tool-pdf-to-jpg.html">PDF to JPG</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html#how-it-works">How it works</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="privacy.html">Privacy policy</a></li>
+            <li><a href="terms.html">Terms of service</a></li>
+            <li><a href="privacy.html#cookies">Cookie policy</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="year">2025</span> PDF Experts. All rights reserved.</span>
+        <span class="footer-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6Z"/></svg>
+          Files never leave your device.
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/tools-data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script>
+    window.PDF_EXPERTS_TOOL = {
+      type: "page-numbers",
+      accept: ".pdf,application/pdf",
+      multiple: false,
+      maxFiles: 1,
+      maxSizeMB: 100
+    };
+  </script>
+  <script src="assets/js/tool-runner.js"></script>
+</body>
+</html>
