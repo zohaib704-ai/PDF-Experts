@@ -140,13 +140,24 @@
   }
 
   /* ---------- Homepage grid ---------- */
+    /* ---------- Homepage grid ---------- */
   function initHomepage() {
     var grid = $("#tool-grid");
     if (!grid) return;
 
     var tabs = $$(".category-tab");
     var count = $("#tool-count");
+    var summary = $("#tool-summary");
     var activeCategory = "All";
+
+    var readyTotal = tools.filter(function (t) { return t.ready; }).length;
+    var comingTotal = tools.length - readyTotal;
+
+    if (summary) {
+      summary.innerHTML =
+        "<strong>" + readyTotal + "</strong> tools are ready to use right now. " +
+        "The other <strong>" + comingTotal + "</strong> are being built with the same privacy-first approach.";
+    }
 
     function render() {
       var filtered = tools.filter(function (tool) {
@@ -168,8 +179,14 @@
       }).join("");
 
       if (count) {
-        count.textContent = filtered.length + (filtered.length === 1 ? " tool" : " tools") + " shown";
+        var readyInView = filtered.filter(function (t) { return t.ready; }).length;
+        var comingInView = filtered.length - readyInView;
+        count.textContent =
+          filtered.length + (filtered.length === 1 ? " tool" : " tools") + " shown · " +
+          readyInView + " ready · " +
+          comingInView + " coming soon";
       }
+
       revealCards();
     }
 
