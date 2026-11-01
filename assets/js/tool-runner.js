@@ -802,16 +802,247 @@
   }
 
   var processors = {
-    "merge": processMerge,
-    "split": processSplit,
-    "rotate": processRotate,
-    "organize": processOrganize,
-    "page-numbers": processPageNumbers,
-    "watermark": processWatermark,
-    "crop": processCrop,
-    "jpg-to-pdf": processJpgToPdf,
-    "pdf-to-jpg": processPdfToJpg
+     { slug: "repair-pdf",     name: "Repair PDF",      description: "Rebuild damaged or malformed PDF files.",                       category: "Optimize", ready: true, file: "tool-repair.html",    icon: "optimize" },
+  { slug: "compress-pdf",   name: "Compress PDF",    description: "Reduce PDF size while keeping the document readable.",          category: "Optimize", ready: true, file: "tool-compress.html",  icon: "optimize" },
+  { slug: "pdf-to-markdown",name: "PDF to Markdown", description: "Convert PDF text into clean Markdown.",                         category: "Convert",  ready: true, file: "tool-pdf-to-md.html", icon: "convert"  },
+  { slug: "compare-pdf",    name: "Compare PDF",     description: "Spot differences between two versions of a PDF.",               category: "Edit",     ready: true, file: "tool-compare.html",   icon: "edit"     },
+  { slug: "pdf-to-word",    name: "PDF to Word",     description: "Turn PDF pages into editable Word documents.",                  category: "Convert",  ready: true, file: "tool-pdf-to-word.html", icon: "convert"  },
   };
+
+    /* ---------- Repair PDF ---------- */
+  async function processRepair() {
+    var PDFDocument = PDFLib.PDFDocument;
+    var file = state.files[0];
+    var bytes = await file.arrayBuffer();
+    var doc;
+    try {
+      doc = await PDFDocument.load(bytes, {
+        ignoreEncryption: true,
+        throwOnInvalidObject: false,
+        updateMetadata: false
+      });
+    } catch (err) {
+      throw new Error("Could not read this PDF. It may be too badly damaged to repair.");
+    }
+    setProgress(80, "Rebuilding file structure…");
+    var data;
+    try {
+      data = await doc.save();
+    } catch (err) {
+      throw new Error("Repair failed. The file structure is too damaged to rebuild.");
+    }
+    return {
+      blob: new Blob([data], { type: "application/pdf" }),
+      filename: "repaired-" + file.name
+    };
+  }
+
+  /* ---------- Compress PDF ---------- */
+  async function processCompress() {
+    if (!window.pdfjsLib) throw new Error("PDF renderer did not load.");
+    var PDFDocument = PDFLib.PDFDocument;
+    var file = state.files[0];
+    var presetEl = $("#compress-preset");
+    var preset = (presetEl && presetEl.value) || "balanced";
+    var settings = {
+      small:    { q: 0.5,  s: 1 },
+      balanced: { q: 0.7,  s: 1.5 },
+      high:     { q: 0.85, s: 2 }
+    };
+    var chosen = settings[preset] || settings.balanced;
+
+    var bytes = await file.arrayBuffer();
+    var pdf = await pdfjsLib.getDocument({ data: new Uint8Array(bytes.slice(0)) }).promise;
+    var total = pdf.numPages;
+    var out = await PDFDocument.create();
+
+    for (var i = 1; i <= total; i++) {
+      setProgress(8 + ((i - 1) / total) * 82, "Compressing page " + i + " of " + total + "…");
+      var page = await pdf.getPage(i);
+      var baseVp = page.getViewport({ scale: 1 });
+      var renderVp = page.getViewport({ scale: chosen.s });
+      var canvas = document.createElement("canvas");
+      canvas.width = Math.ceil(renderVp.width);
+      canvas.height = Math.ceil(renderVp.height);
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      await page.render({ canvasContext: ctx, viewport: renderVp }).promise;
+
+      var jpgBlob = await new Promise(function (resolve) {
+        canvas.toBlob(resolve, "image/jpeg", chosen.q);
+      });
+      var jpgBytes = await jpgBlob.arrayBuffer();
+      var img = await out.embedJpg(jpgBytes);
+      var pdfPage = out.addPage([baseVp.width, baseVp.height]);
+      pdfPage.drawImage(img, { x: 0, y: 0, width: baseVp.width, height: baseVp.height });
+      canvas.width = 0; canvas.height = 0;
+      await tick(5);
+    }
+
+    setProgress(95, "Building compressed PDF…");
+    var data = await out.save();
+    return {
+      blob: new Blob([data], { type: "application/pdf" }),
+      filename: "compressed-" + file.name
+    };
+  }
+
+  /* ---------- PDF to Markdown ---------- */
+  async function processPdfToMarkdown() {
+    if (!window.pdfjsLib) throw new Error("PDF renderer did not load.");
+    var file = state.files[0];
+    var bytes = await file.arrayBuffer();
+    var pdf = await pdfjsLib.getDocument({ data: new Uint8Array(bytes.slice(0)) }).promise;
+    var total = pdf.numPages;
+    var md = ["# " + file.name.replace(/\.pdf$/i, ""), ""];
+
+    for (var i = 1; i <= total; i++) {
+      setProgress(8 + ((i - 1) / total) * 82, "Extracting page " + i + " of " + total + "…");
+      var page = await pdf.getPage(i);
+      var content = await page.getTextContent();
+      var lines = {};
+      content.items.forEach(function (item) {
+        if (!item.str || !item.str.trim()) return;
+        var y = Math.round(item.transform[5]);
+        if (!lines[y]) lines[y] = [];
+        lines[y].push({ x: item.transform[4], text: item.str, size: Math.abs(item.transform[0]) });
+      });
+
+      md.push("");
+      md.push("## Page " + i);
+      md.push("");
+
+      var sortedY = Object.keys(lines).map(Number).sort(function (a, b) { return b - a; });
+      sortedY.forEach(function (y) {
+        var items = lines[y].sort(function (a, b) { return a.x - b.x; });
+        var text = items.map(function (it) { return it.text; }).join(" ").replace(/\s+/g, " ").trim();
+        if (!text) return;
+        var avgSize = items.reduce(function (s, it) { return s + it.size; }, 0) / items.length;
+        if (avgSize > 20) md.push("\n### " + text + "\n");
+        else if (avgSize > 14) md.push("\n**" + text + "**\n");
+        else md.push(text);
+      });
+      await tick(5);
+    }
+
+    var text = md.join("\n");
+    return {
+      blob: new Blob([text], { type: "text/markdown" }),
+      filename: file.name.replace(/\.pdf$/i, "") + ".md"
+    };
+  }
+
+  /* ---------- Compare PDF ---------- */
+  async function processCompare() {
+    if (!window.pdfjsLib) throw new Error("PDF renderer did not load.");
+    if (state.files.length !== 2) throw new Error("Please add exactly two PDF files to compare.");
+
+    var texts = [];
+    for (var f = 0; f < 2; f++) {
+      setProgress(10 + f * 30, "Reading file " + (f + 1) + " of 2…");
+      var bytes = await state.files[f].arrayBuffer();
+      var pdf = await pdfjsLib.getDocument({ data: new Uint8Array(bytes.slice(0)) }).promise;
+      var pageTexts = [];
+      for (var p = 1; p <= pdf.numPages; p++) {
+        var page = await pdf.getPage(p);
+        var content = await page.getTextContent();
+        var pageText = content.items.map(function (it) { return it.str; }).join(" ");
+        pageTexts.push(pageText.replace(/\s+/g, " ").trim());
+      }
+      texts.push(pageTexts);
+    }
+
+    setProgress(80, "Comparing pages…");
+    var maxPages = Math.max(texts[0].length, texts[1].length);
+    var out = [
+      "# PDF Comparison", "",
+      "**File A:** " + state.files[0].name,
+      "**File B:** " + state.files[1].name,
+      "**Pages A:** " + texts[0].length,
+      "**Pages B:** " + texts[1].length,
+      "", "---", ""
+    ];
+
+    var changes = 0;
+    for (var i = 0; i < maxPages; i++) {
+      var a = texts[0][i] || "";
+      var b = texts[1][i] || "";
+      if (a === b) continue;
+      changes++;
+      out.push("## Page " + (i + 1));
+      out.push("");
+      if (!a) out.push("_Page missing in file A._");
+      else if (!b) out.push("_Page missing in file B._");
+      else {
+        var wordsA = a.split(" ").filter(Boolean);
+        var wordsB = b.split(" ").filter(Boolean);
+        var setA = new Set(wordsA);
+        var setB = new Set(wordsB);
+        var onlyA = wordsA.filter(function (w) { return !setB.has(w); }).slice(0, 50);
+        var onlyB = wordsB.filter(function (w) { return !setA.has(w); }).slice(0, 50);
+        if (onlyA.length) out.push("- **Only in A:** " + onlyA.join(" "));
+        if (onlyB.length) out.push("- **Only in B:** " + onlyB.join(" "));
+        if (!onlyA.length && !onlyB.length) out.push("- _Same words, different order — layout may have changed._");
+      }
+      out.push("");
+    }
+
+    if (changes === 0) out.push("_No differences detected in extracted text._");
+
+    var text = out.join("\n");
+    return {
+      blob: new Blob([text], { type: "text/markdown" }),
+      filename: "comparison-" + Date.now() + ".md"
+    };
+  }
+
+  /* ---------- PDF to Word ---------- */
+  async function processPdfToWord() {
+    if (!window.pdfjsLib) throw new Error("PDF renderer did not load.");
+    if (!window.docx) throw new Error("Word library failed to load. Check your connection and refresh.");
+    var file = state.files[0];
+    var bytes = await file.arrayBuffer();
+    var pdf = await pdfjsLib.getDocument({ data: new Uint8Array(bytes.slice(0)) }).promise;
+    var total = pdf.numPages;
+
+    var children = [
+      new docx.Paragraph({
+        text: file.name.replace(/\.pdf$/i, ""),
+        heading: docx.HeadingLevel.TITLE
+      })
+    ];
+
+    for (var i = 1; i <= total; i++) {
+      setProgress(8 + ((i - 1) / total) * 82, "Converting page " + i + " of " + total + "…");
+      var page = await pdf.getPage(i);
+      var content = await page.getTextContent();
+      var lines = {};
+      content.items.forEach(function (item) {
+        if (!item.str || !item.str.trim()) return;
+        var y = Math.round(item.transform[5]);
+        if (!lines[y]) lines[y] = [];
+        lines[y].push({ x: item.transform[4], text: item.str });
+      });
+      var sortedY = Object.keys(lines).map(Number).sort(function (a, b) { return b - a; });
+      sortedY.forEach(function (y) {
+        var text = lines[y].sort(function (a, b) { return a.x - b.x; })
+          .map(function (it) { return it.text; }).join(" ").replace(/\s+/g, " ").trim();
+        if (!text) return;
+        children.push(new docx.Paragraph({ text: text }));
+      });
+      children.push(new docx.Paragraph({ text: "" }));
+      await tick(5);
+    }
+
+    setProgress(95, "Building Word document…");
+    var doc = new docx.Document({ sections: [{ children: children }] });
+    var blob = await docx.Packer.toBlob(doc);
+    return {
+      blob: blob,
+      filename: file.name.replace(/\.pdf$/i, "") + ".docx"
+    };
+  } 
 
   async function runProcess() {
     if (state.busy) return;
