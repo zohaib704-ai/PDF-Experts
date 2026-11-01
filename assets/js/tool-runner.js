@@ -1,6 +1,12 @@
 /* PDF Experts — shared tool engine.
    Reads window.PDF_EXPERTS_TOOL config and wires the standard tool page UI.
-   Libraries expected on the page: PDFLib, pdfjsLib, JSZip. */
+
+   Libraries expected on the page (load via <script> before this file):
+     - pdf-lib 1.17.1  (window.PDFLib)
+     - pdf.js 3.11.174 (window.pdfjsLib)
+     - JSZip 3.10.1    (window.JSZip)
+     - docx 8.5.0      (window.docx) — only required for the PDF to Word tool
+*/
 (function () {
   "use strict";
 
@@ -238,7 +244,10 @@
     if (fi) fi.value = "";
   }
 
-  /* ---------------- processors ---------------- */
+  /* =========================================================
+     PROCESSORS
+     ========================================================= */
+
   async function processMerge() {
     var PDFDocument = PDFLib.PDFDocument;
     var out = await PDFDocument.create();
@@ -801,15 +810,7 @@
     };
   }
 
-  var processors = {
-     { slug: "repair-pdf",     name: "Repair PDF",      description: "Rebuild damaged or malformed PDF files.",                       category: "Optimize", ready: true, file: "tool-repair.html",    icon: "optimize" },
-  { slug: "compress-pdf",   name: "Compress PDF",    description: "Reduce PDF size while keeping the document readable.",          category: "Optimize", ready: true, file: "tool-compress.html",  icon: "optimize" },
-  { slug: "pdf-to-markdown",name: "PDF to Markdown", description: "Convert PDF text into clean Markdown.",                         category: "Convert",  ready: true, file: "tool-pdf-to-md.html", icon: "convert"  },
-  { slug: "compare-pdf",    name: "Compare PDF",     description: "Spot differences between two versions of a PDF.",               category: "Edit",     ready: true, file: "tool-compare.html",   icon: "edit"     },
-  { slug: "pdf-to-word",    name: "PDF to Word",     description: "Turn PDF pages into editable Word documents.",                  category: "Convert",  ready: true, file: "tool-pdf-to-word.html", icon: "convert"  },
-  };
-
-    /* ---------- Repair PDF ---------- */
+  /* ---------- Repair PDF ---------- */
   async function processRepair() {
     var PDFDocument = PDFLib.PDFDocument;
     var file = state.files[0];
@@ -1042,7 +1043,27 @@
       blob: blob,
       filename: file.name.replace(/\.pdf$/i, "") + ".docx"
     };
-  } 
+  }
+
+  /* =========================================================
+     PROCESSOR REGISTRY — maps cfg.type to a function
+     ========================================================= */
+  var processors = {
+    "merge":         processMerge,
+    "split":         processSplit,
+    "rotate":        processRotate,
+    "organize":      processOrganize,
+    "page-numbers":  processPageNumbers,
+    "watermark":     processWatermark,
+    "crop":          processCrop,
+    "jpg-to-pdf":    processJpgToPdf,
+    "pdf-to-jpg":    processPdfToJpg,
+    "repair":        processRepair,
+    "compress":      processCompress,
+    "pdf-to-md":     processPdfToMarkdown,
+    "compare":       processCompare,
+    "pdf-to-word":   processPdfToWord
+  };
 
   async function runProcess() {
     if (state.busy) return;
