@@ -1,40 +1,36 @@
-/* PDF Experts — tool registry.
-   Loaded on every page before app.js.
-   ready: true  → homepage card opens a working tool page.
-   ready: false → homepage card shows "Coming soon" and is not clickable. */
 window.PDF_TOOLS = [
-  /* ===================== READY (14 working tools) ===================== */
-  { slug: "merge-pdf",       name: "Merge PDF",        description: "Combine several PDF files into one tidy document.",             category: "Organize", ready: true,  file: "tool-merge.html",        icon: "organize" },
-  { slug: "split-pdf",       name: "Split PDF",        description: "Extract pages or split a PDF into separate files.",            category: "Organize", ready: true,  file: "tool-split.html",        icon: "organize" },
-  { slug: "pdf-to-jpg",      name: "PDF to JPG",       description: "Turn every PDF page into a high-quality JPG image.",           category: "Convert",  ready: true,  file: "tool-pdf-to-jpg.html",   icon: "convert"  },
-  { slug: "jpg-to-pdf",      name: "JPG to PDF",       description: "Combine JPG or PNG images into a single PDF.",                 category: "Convert",  ready: true,  file: "tool-jpg-to-pdf.html",   icon: "convert"  },
-  { slug: "watermark",       name: "Watermark",        description: "Stamp text watermarks across your PDF pages.",                 category: "Edit",     ready: true,  file: "tool-watermark.html",    icon: "edit"     },
-  { slug: "rotate-pdf",      name: "Rotate PDF",       description: "Rotate all or selected pages by 90, 180 or 270 degrees.",      category: "Organize", ready: true,  file: "tool-rotate.html",       icon: "organize" },
-  { slug: "organize-pdf",    name: "Organize PDF",     description: "Reorder, duplicate or delete PDF pages visually.",             category: "Organize", ready: true,  file: "tool-organize.html",     icon: "organize" },
-  { slug: "page-numbers",    name: "Page numbers",     description: "Add clean page numbers to every page.",                        category: "Edit",     ready: true,  file: "tool-page-numbers.html", icon: "edit"     },
-  { slug: "crop-pdf",        name: "Crop PDF",         description: "Trim margins and focus on the content that matters.",          category: "Edit",     ready: true,  file: "tool-crop.html",         icon: "edit"     },
-  { slug: "repair-pdf",      name: "Repair PDF",       description: "Rebuild damaged or malformed PDF files.",                      category: "Optimize", ready: true,  file: "tool-repair.html",       icon: "optimize" },
-  { slug: "compress-pdf",    name: "Compress PDF",     description: "Reduce PDF size while keeping the document readable.",          category: "Optimize", ready: true,  file: "tool-compress.html",     icon: "optimize" },
-  { slug: "pdf-to-markdown", name: "PDF to Markdown",  description: "Convert PDF text into clean Markdown.",                        category: "Convert",  ready: true,  file: "tool-pdf-to-md.html",    icon: "convert"  },
-  { slug: "compare-pdf",     name: "Compare PDF",      description: "Spot differences between two versions of a PDF.",              category: "Edit",     ready: true,  file: "tool-compare.html",      icon: "edit"     },
-  { slug: "pdf-to-word",     name: "PDF to Word",      description: "Turn PDF pages into editable Word documents.",                 category: "Convert",  ready: true,  file: "tool-pdf-to-word.html",  icon: "convert"  },
+  /* READY — 17 working tools */
+  { slug: "merge-pdf",       name: "Merge PDF",        description: "Combine several PDF files into one tidy document.",             category: "Organize", ready: true, file: "tool-merge.html",        icon: "organize" },
+  { slug: "split-pdf",       name: "Split PDF",        description: "Extract pages or split a PDF into separate files.",            category: "Organize", ready: true, file: "tool-split.html",        icon: "organize" },
+  { slug: "pdf-to-jpg",      name: "PDF to JPG",       description: "Turn every PDF page into a high-quality JPG image.",           category: "Convert",  ready: true, file: "tool-pdf-to-jpg.html",   icon: "convert"  },
+  { slug: "jpg-to-pdf",      name: "JPG to PDF",       description: "Combine JPG or PNG images into a single PDF.",                 category: "Convert",  ready: true, file: "tool-jpg-to-pdf.html",   icon: "convert"  },
+  { slug: "watermark",       name: "Watermark",        description: "Stamp text watermarks across your PDF pages.",                 category: "Edit",     ready: true, file: "tool-watermark.html",    icon: "edit"     },
+  { slug: "rotate-pdf",      name: "Rotate PDF",       description: "Rotate all or selected pages by 90, 180 or 270 degrees.",      category: "Organize", ready: true, file: "tool-rotate.html",       icon: "organize" },
+  { slug: "organize-pdf",    name: "Organize PDF",     description: "Reorder, duplicate or delete PDF pages visually.",             category: "Organize", ready: true, file: "tool-organize.html",     icon: "organize" },
+  { slug: "page-numbers",    name: "Page numbers",     description: "Add clean page numbers to every page.",                        category: "Edit",     ready: true, file: "tool-page-numbers.html", icon: "edit"     },
+  { slug: "crop-pdf",        name: "Crop PDF",         description: "Trim margins and focus on the content that matters.",          category: "Edit",     ready: true, file: "tool-crop.html",         icon: "edit"     },
+  { slug: "repair-pdf",      name: "Repair PDF",       description: "Rebuild damaged or malformed PDF files.",                      category: "Optimize", ready: true, file: "tool-repair.html",       icon: "optimize" },
+  { slug: "compress-pdf",    name: "Compress PDF",     description: "Reduce PDF size while keeping the document readable.",          category: "Optimize", ready: true, file: "tool-compress.html",     icon: "optimize" },
+  { slug: "pdf-to-markdown", name: "PDF to Markdown",  description: "Convert PDF text into clean Markdown.",                        category: "Convert",  ready: true, file: "tool-pdf-to-md.html",    icon: "convert"  },
+  { slug: "compare-pdf",     name: "Compare PDF",      description: "Spot differences between two versions of a PDF.",              category: "Edit",     ready: true, file: "tool-compare.html",      icon: "edit"     },
+  { slug: "pdf-to-word",     name: "PDF to Word",      description: "Turn PDF pages into editable Word documents.",                 category: "Convert",  ready: true, file: "tool-pdf-to-word.html",  icon: "convert"  },
+  { slug: "sign-pdf",        name: "Sign PDF",         description: "Add a drawn or typed signature to a document.",                category: "Edit",     ready: true, file: "tool-sign.html",         icon: "edit"     },
+  { slug: "redact-pdf",      name: "Redact PDF",       description: "Permanently remove sensitive content from pages.",             category: "Security", ready: true, file: "tool-redact.html",       icon: "security" },
+  { slug: "ocr-pdf",         name: "OCR PDF",          description: "Make scanned text searchable with optical recognition.",       category: "Convert",  ready: true, file: "tool-ocr.html",          icon: "convert"  },
 
-  /* ===================== COMING SOON (17 not yet built) ===================== */
-  { slug: "pdf-to-powerpoint", name: "PDF to PowerPoint",  description: "Convert PDF pages into presentation slides.",            category: "Convert",  ready: false, file: "", icon: "convert"  },
-  { slug: "pdf-to-excel",      name: "PDF to Excel",       description: "Extract tables and data into spreadsheet files.",         category: "Convert",  ready: false, file: "", icon: "convert"  },
-  { slug: "word-to-pdf",       name: "Word to PDF",        description: "Create clean, shareable PDFs from Word files.",           category: "Convert",  ready: false, file: "", icon: "convert"  },
-  { slug: "powerpoint-to-pdf", name: "PowerPoint to PDF",  description: "Export slide decks as polished PDF documents.",           category: "Convert",  ready: false, file: "", icon: "convert"  },
-  { slug: "excel-to-pdf",      name: "Excel to PDF",       description: "Convert spreadsheets into print-ready PDFs.",             category: "Convert",  ready: false, file: "", icon: "convert"  },
-  { slug: "edit-pdf",          name: "Edit PDF",           description: "Add text, shapes and annotations to your PDF.",           category: "Edit",     ready: false, file: "", icon: "edit"     },
-  { slug: "sign-pdf",          name: "Sign PDF",           description: "Add a drawn or typed signature to a document.",           category: "Edit",     ready: false, file: "", icon: "edit"     },
-  { slug: "html-to-pdf",       name: "HTML to PDF",        description: "Save web pages and HTML files as PDF documents.",         category: "Convert",  ready: false, file: "", icon: "convert"  },
-  { slug: "unlock-pdf",        name: "Unlock PDF",         description: "Remove passwords from PDFs you own.",                     category: "Security", ready: false, file: "", icon: "security" },
-  { slug: "protect-pdf",       name: "Protect PDF",        description: "Add password protection to sensitive documents.",         category: "Security", ready: false, file: "", icon: "security" },
-  { slug: "pdf-to-pdfa",       name: "PDF to PDF/A",       description: "Prepare PDFs for long-term archiving.",                   category: "Optimize", ready: false, file: "", icon: "optimize" },
-  { slug: "scan-to-pdf",       name: "Scan to PDF",        description: "Use your camera to create a PDF from paper documents.",   category: "Convert",  ready: false, file: "", icon: "convert"  },
-  { slug: "ocr-pdf",           name: "OCR PDF",            description: "Make scanned text searchable with optical recognition.",  category: "Convert",  ready: false, file: "", icon: "convert"  },
-  { slug: "redact-pdf",        name: "Redact PDF",         description: "Permanently remove sensitive content from pages.",        category: "Security", ready: false, file: "", icon: "security" },
-  { slug: "pdf-forms",         name: "PDF Forms",          description: "Fill, flatten and manage interactive PDF forms.",         category: "Edit",     ready: false, file: "", icon: "edit"     },
-  { slug: "ai-summarizer",     name: "AI Summarizer",      description: "Create a concise summary of a long PDF.",                 category: "Edit",     ready: false, file: "", icon: "edit"     },
-  { slug: "translate-pdf",     name: "Translate PDF",      description: "Translate PDF text into another language.",               category: "Edit",     ready: false, file: "", icon: "edit"     }
+  /* COMING SOON — 14 remaining */
+  { slug: "pdf-to-powerpoint", name: "PDF to PowerPoint", description: "Convert PDF pages into presentation slides.",           category: "Convert",  ready: false, file: "", icon: "convert"  },
+  { slug: "pdf-to-excel",      name: "PDF to Excel",      description: "Extract tables and data into spreadsheet files.",        category: "Convert",  ready: false, file: "", icon: "convert"  },
+  { slug: "word-to-pdf",       name: "Word to PDF",       description: "Create clean, shareable PDFs from Word files.",          category: "Convert",  ready: false, file: "", icon: "convert"  },
+  { slug: "powerpoint-to-pdf", name: "PowerPoint to PDF", description: "Export slide decks as polished PDF documents.",          category: "Convert",  ready: false, file: "", icon: "convert"  },
+  { slug: "excel-to-pdf",      name: "Excel to PDF",      description: "Convert spreadsheets into print-ready PDFs.",            category: "Convert",  ready: false, file: "", icon: "convert"  },
+  { slug: "edit-pdf",          name: "Edit PDF",          description: "Add text, shapes and annotations to your PDF.",          category: "Edit",     ready: false, file: "", icon: "edit"     },
+  { slug: "html-to-pdf",       name: "HTML to PDF",       description: "Save web pages and HTML files as PDF documents.",        category: "Convert",  ready: false, file: "", icon: "convert"  },
+  { slug: "unlock-pdf",        name: "Unlock PDF",        description: "Remove passwords from PDFs you own.",                    category: "Security", ready: false, file: "", icon: "security" },
+  { slug: "protect-pdf",       name: "Protect PDF",       description: "Add password protection to sensitive documents.",        category: "Security", ready: false, file: "", icon: "security" },
+  { slug: "pdf-to-pdfa",       name: "PDF to PDF/A",      description: "Prepare PDFs for long-term archiving.",                  category: "Optimize", ready: false, file: "", icon: "optimize" },
+  { slug: "scan-to-pdf",       name: "Scan to PDF",       description: "Use your camera to create a PDF from paper documents.",  category: "Convert",  ready: false, file: "", icon: "convert"  },
+  { slug: "pdf-forms",         name: "PDF Forms",         description: "Fill, flatten and manage interactive PDF forms.",        category: "Edit",     ready: false, file: "", icon: "edit"     },
+  { slug: "ai-summarizer",     name: "AI Summarizer",     description: "Create a concise summary of a long PDF.",                category: "Edit",     ready: false, file: "", icon: "edit"     },
+  { slug: "translate-pdf",     name: "Translate PDF",     description: "Translate PDF text into another language.",              category: "Edit",     ready: false, file: "", icon: "edit"     }
 ];
