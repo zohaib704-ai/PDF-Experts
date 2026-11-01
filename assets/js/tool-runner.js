@@ -1,11 +1,11 @@
 /* PDF Experts — shared tool engine.
    Reads window.PDF_EXPERTS_TOOL config and wires the standard tool page UI.
 
-   Libraries expected on the page (load via <script> before this file):
+   Libraries expected on the page:
      - pdf-lib 1.17.1  (window.PDFLib)
      - pdf.js 3.11.174 (window.pdfjsLib)
      - JSZip 3.10.1    (window.JSZip)
-     - docx 8.5.0      (window.docx) — only required for the PDF to Word tool
+     - docx 8.5.0      (window.docx) — only for the PDF to Word tool
 */
 (function () {
   "use strict";
@@ -445,7 +445,6 @@
       container.appendChild(card);
       card.classList.toggle("is-deleted", p.deleted);
       card.style.opacity = p.deleted ? "0.4" : "";
-      card.style.textDecoration = p.deleted ? "line-through" : "";
       var label = card.querySelector(".thumb-label span");
       if (label) label.textContent = p.deleted ? "Page removed" : "Page " + (p.originalIndex + 1);
     });
@@ -1046,7 +1045,7 @@
   }
 
   /* =========================================================
-     PROCESSOR REGISTRY — maps cfg.type to a function
+     PROCESSOR REGISTRY
      ========================================================= */
   var processors = {
     "merge":         processMerge,
