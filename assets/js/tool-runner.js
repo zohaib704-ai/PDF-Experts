@@ -997,6 +997,133 @@
     };
   }
 
+     async function processSign() {
+    var PDFDocument = PDFLib.PDFDocument;
+    var file = state.files[0];
+    var canvas = $("#sig-canvas");
+    if (!canvas) throw new Error("Signature canvas not found.");
+    var ctx = canvas.getContext("2d");
+    var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var hasInk = false;
+    for (var i = 3; i < imgData.data.length; i += 4) {
+      if (imgData.data[i] > 10) { hasInk = true; break; }
+    }
+    if (!hasInk) throw new Error("Please draw your signature in the box first.");
+
+    var bytes = await file.arrayBuffer();
+    var doc = await PDFDocument.load(bytes, { ignoreEncryption: true });
+    var sigBlob = await new Promise(function (r) { canvas.toBlob(r, "image/png"); });
+    var sigBytes = await sigBlob.arrayBuffer();
+    var sigImg = await doc.embedPng(sigBytes);
+
+    var pageNum = parseInt(($("#sign-page") || {}).value, 10) || 1;
+    var pages = doc.getPages();
+    if (pageNum < 1 || pageNum > pages.length) throw new Error("Page number out of range (1–" + pages.length + ").");
+    var page = pages[pageNum - 1];
+    var size = page.getSize();
+    var scalePct = parseFloat(($("#sign-scale") || {}).value) || 30;
+    var w = size.width * (scalePct / 100);
+    var h = (sigImg.height / sigImg.width) * w;
+    var posX = ($("#sign-pos-x") || {}).value || "right";
+    var posY = ($("#sign-pos-y") || {}).value || "bottom";
+    var x = posX === "left" ? 40 : posX === "center" ? (size.width - w) / 2 : size.width - w - 40;
+    var y = posY === "top" ? size.height - h - 40 : posY === "middle" ? (size.height - h) / 2 : 40;
+
+    setProgress(60, "Placing signature…");
+    page.drawImage(sigImg, { x: x, y: y, width: w, height: h });
+    setProgress(95, "Saving…");
+    var data = await doc.save();
+    return { blob: new Blob([data], { type: "application/pdf" }), filename: "signed-" + file.name };
+  }
+
+     async function processRedact() {
+    if (!window.pdfjsLib) throw new Error("PDF renderer did not load.");
+    var PDFDocument = PDFLib.PDFDocument;
+    var file = state.files[0];
+    var rects = state.redactRects || [];
+    if (!rects.length) throw new Error("Please draw at least one black box over sensitive content.");
+
+    var bytes = await file.arrayBuffer();
+    var pdf = await pdfjsLib.getDocument({ data: new Uint8Array(bytes.slice(0)) }).promise;
+    var total = pdf.numPages;
+    var out = await PDFDocument.create();
+
+    for (var i = 1; i <= total; i++) {
+      setProgress(8 + ((i - 1) / total) * 82, "Redacting page " + i + " of " + total + "…");
+      var page = await pdf.getPage(i);
+      var vp = page.getViewport({ scale: 2 });
+      var canvas = document.createElement("canvas");
+      canvas.width = Math.ceil(vp.width);
+      canvas.height = Math.ceil(vp.height);
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      await page.render({ canvasContext: ctx, viewport: vp }).promise;
+
+      ctx.fillStyle = "#000000";
+      rects.forEach(function (r) {
+        ctx.fillRect(r.x * 2, r.y * 2, r.w * 2, r.h * 2);
+      });
+
+      var jpgBlob = await new Promise(function (res) { canvas.toBlob(res, "image/jpeg", 0.9); });
+      var jpgBytes = await jpgBlob.arrayBuffer();
+      var img = await out.embedJpg(jpgBytes);
+      var baseVp = page.getViewport({ scale: 1 });
+      var pdfPage = out.addPage([baseVp.width, baseVp.height]);
+      pdfPage.drawImage(img, { x: 0, y: 0, width: baseVp.width, height: baseVp.height });
+      canvas.width = 0; canvas.height = 0;
+      await tick(5);
+    }
+    var data = await out.save();
+    return { blob: new Blob([data], { type: "application/pdf" }), filename: "redacted-" + file.name };
+  }
+
+     async function processOcr() {
+    if (!window.pdfjsLib) throw new Error("PDF renderer did not load.");
+    if (!window.Tesseract) throw new Error("OCR engine failed to load. Check your connection.");
+    var file = state.files[0];
+    var lang = ($("#ocr-lang") || {}).value || "eng";
+
+    var bytes = await file.arrayBuffer();
+    var pdf = await pdfjsLib.getDocument({ data: new Uint8Array(bytes.slice(0)) }).promise;
+    var total = pdf.numPages;
+    var texts = [];
+
+    for (var i = 1; i <= total; i++) {
+      setProgress(8 + ((i - 1) / total) * 82, "OCR page " + i + " of " + total + "…");
+      var page = await pdf.getPage(i);
+      var vp = page.getViewport({ scale: 2 });
+      var canvas = document.createElement("canvas");
+      canvas.width = Math.ceil(vp.width);
+      canvas.height = Math.ceil(vp.height);
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      await page.render({ canvasContext: ctx, viewport: vp }).promise;
+
+      var result = await Tesseract.recognize(canvas, lang, {
+        logger: function (m) {
+          if (m.status === "recognizing text") {
+            setProgress(8 + ((i - 1) / total) * 82 + (m.progress / total) * 82,
+              "OCR page " + i + " — " + Math.round(m.progress * 100) + "%");
+          }
+        }
+      });
+      texts.push(result.data.text);
+      canvas.width = 0; canvas.height = 0;
+    }
+
+    var out = texts.map(function (t, i) {
+      return "=== Page " + (i + 1) + " ===\n\n" + t.trim();
+    }).join("\n\n");
+    return {
+      blob: new Blob([out], { type: "text/plain" }),
+      filename: file.name.replace(/\.pdf$/i, "") + "-ocr.txt"
+    };
+  }
+
+   
+
   /* ---------- PDF to Word ---------- */
   async function processPdfToWord() {
     if (!window.pdfjsLib) throw new Error("PDF renderer did not load.");
@@ -1047,7 +1174,7 @@
   /* =========================================================
      PROCESSOR REGISTRY
      ========================================================= */
-  var processors = {
+    var processors = {
     "merge":         processMerge,
     "split":         processSplit,
     "rotate":        processRotate,
@@ -1061,9 +1188,12 @@
     "compress":      processCompress,
     "pdf-to-md":     processPdfToMarkdown,
     "compare":       processCompare,
-    "pdf-to-word":   processPdfToWord
+    "pdf-to-word":   processPdfToWord,
+    "sign":          processSign,
+    "redact":        processRedact,
+    "ocr":           processOcr
   };
-
+   
   async function runProcess() {
     if (state.busy) return;
     if (!state.files.length) { showError("Please add at least one file."); return; }
