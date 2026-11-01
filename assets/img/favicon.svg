@@ -1,1 +1,9 @@
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="PDF Experts">
+  <rect width="64" height="64" rx="14" fill="#0B1F3A"/>
+  <path d="M18 12h20l14 14v26a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V16a4 4 0 0 1 4-4Z" fill="#FFFFFF"/>
+  <path d="M38 12v14h14" fill="#CCFBF1"/>
+  <path d="M38 12l14 14H38V12Z" fill="#14B8A6"/>
+  <path d="M23 34h18" stroke="#0B1F3A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M23 41h18" stroke="#0B1F3A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M23 48h10" stroke="#14B8A6" stroke-width="3" stroke-linecap="round"/>
+</svg>
